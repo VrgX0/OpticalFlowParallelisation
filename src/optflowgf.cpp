@@ -1277,7 +1277,7 @@ private:
             /*CV_OCL_RUN(_flow0.isUMat() &&
                        ocl::Image2D::isFormatSupported(CV_32F, 1, false),
                        calc_ocl(_prev0,_next0,_flow0))
-
+            */
             Mat prev0 = _prev0.getMat(), next0 = _next0.getMat();
             const int min_size = 32;
             const Mat* img[2] = { &prev0, &next0 };
@@ -1366,7 +1366,6 @@ private:
                 prevFlow = flow;
 
             }
-             */
         }
     } // namespace
 } // namespace cv
