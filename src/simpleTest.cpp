@@ -81,6 +81,47 @@ int main() {
            << "durationToFour:" << durationToFour << "\n" << "durationStepFour:" << durationStepFour << "\n";
     myFile.close();
 
+    int n = 5;
+    std::vector<float> rowBuf(11 + n * 2, 0.f), xRowBuf(11 + n * 2, 0.f), xxRowBuf(11 + n * 2, 0.f);
+    std::vector<float> gb(2*n+1), xgb(2*n+1), xxgb(2*n+1);
+    std::vector<int> test (11);
+    std::iota(test.begin(), test.end(),0);
+    auto mainExPo = std::execution::par;
+    std::vector<float> b1(11), b2(11), b3(11), b4(11), b5(11), b6(11);
+    std::for_each(mainExPo,test.begin(), test.end(),
+                  [n, &rowBuf, &gb, &b1, &xRowBuf, &b3, &xxRowBuf, &b5, &b2, &xgb, &b6, &xxgb, &b4, mainExPo](auto x){
+                      int w = 2 * n + 1;
+                      std::vector<float>vec (w);
+                      //from row with normal gb
+                      std::transform(mainExPo, rowBuf.begin()+x, rowBuf.begin() + w + x, gb.begin(), vec.begin(), [](auto &a, auto&b){
+                          return a*b;
+                      });
+                      b1[x] = std::accumulate(vec.begin(), vec.end(), 0.f);
+                      //from xRow with normal gb
+                      std::transform(mainExPo, xRowBuf.begin()+x, xRowBuf.begin() + w + x, gb.begin(), vec.begin(), [](auto &a, auto&b){
+                          return a*b;
+                      });
+                      b3[x] = std::accumulate(vec.begin(), vec.end(), 0.f);
+                      //from xxRow with normal gb
+                      std::transform(mainExPo, xxRowBuf.begin()+x, xxRowBuf.begin() + w + x, gb.begin(), vec.begin(), [](auto &a, auto&b){
+                          return a*b;
+                      });
+                      b5[x] = std::accumulate(vec.begin(), vec.end(), 0.f);
+                      //from xRow with xgb[n] = 0
+                      std::transform(mainExPo, rowBuf.begin()+x, rowBuf.begin() + w + x, xgb.begin(), vec.begin(), [](auto &a, auto&b){
+                          return a*b;
+                      });
+                      b2[x] = std::accumulate(vec.begin(), vec.end(), 0.f);
+                      std::transform(mainExPo, xRowBuf.begin()+x, xRowBuf.begin() + w + x, xgb.begin(), vec.begin(),[](auto &a, auto&b){
+                          return a*b;
+                      });
+                      b6[x] = std::accumulate(vec.begin(), vec.end(), 0.f);
+                      std::transform(mainExPo, rowBuf.begin()+x, rowBuf.begin()+w+x, xxgb.begin(), vec.begin(),[](auto &a, auto&b){
+                          return a*b;
+                      });
+                      b4[x] = std::accumulate(vec.begin(), vec.end(), 0.f);
+                  });
+
 
     auto cmd = "py testPlotter.py";
 
