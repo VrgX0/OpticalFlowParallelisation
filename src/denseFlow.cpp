@@ -11,10 +11,16 @@ using namespace cv;
 using namespace std;
 namespace fs = std::filesystem;
 
+#if defined(_WIN32)
+#define VIDEO "../vtest.avi"
+#else
+#define VIDEO "/vtest.avi"
+#endif
+
 int main()
 {
     //VideoCapture capture(R"(D:\MPI-Sintel-complete\training\clean\bamboo_1\frame_%04d.png)");
-    VideoCapture capture((fs::current_path() / "../vtest.avi").generic_string());
+    VideoCapture capture((fs::current_path() / VIDEO).generic_string());
 
     if (!capture.isOpened()){
         //error in opening the video input
