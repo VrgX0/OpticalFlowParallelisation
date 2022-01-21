@@ -318,7 +318,8 @@ namespace cv
             std::iota(test.begin(), test.end(),0);
 
             std::vector<float> b1(width), b2(width), b3(width), b4(width), b5(width), b6(width);
-            std::for_each(mainExPo,test.begin(), test.end(), [n, &rowBuf, &gb, &ig03, &b1, &xRowBuf, &b3, &ig11, &xxRowBuf, &b5, &ig33, &b2, &xgb, &b6, &ig55, &xxgb, &b4, mainExPo](auto x){
+            std::for_each(mainExPo,test.begin(), test.end(),
+                          [n, &rowBuf, &gb, &b1, &xRowBuf, &b3, &xxRowBuf, &b5, &b2, &xgb, &b6, &xxgb, &b4, mainExPo](auto x){
                 int w = 2 * n + 1;
                 std::vector<float>vec (w);
                 //from row with normal gb

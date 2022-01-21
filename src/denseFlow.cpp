@@ -4,15 +4,18 @@
 #include <opencv2/imgproc.hpp>
 #include <opencv2/videoio.hpp>
 #include <opencv2/video.hpp>
+#include <filesystem>
 #include <chrono>
 
 using namespace cv;
 using namespace std;
+namespace fs = std::filesystem;
 
 int main()
 {
     //VideoCapture capture(R"(D:\MPI-Sintel-complete\training\clean\bamboo_1\frame_%04d.png)");
-    VideoCapture capture(samples::findFile("vtest.avi"));
+    VideoCapture capture((fs::current_path() / "../vtest.avi").generic_string());
+
     if (!capture.isOpened()){
         //error in opening the video input
         cerr << "Unable to open file!" << endl;
