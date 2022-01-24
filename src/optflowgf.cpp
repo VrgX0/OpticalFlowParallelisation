@@ -237,7 +237,7 @@ namespace cv
         double d_initRow = 0, d_verticalConvl = 0, d_shiftRow = 0, d_horizontalConv = 0;
 
         FarnebackPrepareGaussian(n, sigma, g, xg, xxg, ig11, ig03, ig33, ig55);
-
+        /*
         std::vector<float> gb(2*n+1), xgb(2*n+1), xxgb(2*n+1);
         for (int i = 0; i < n*2+1; ++i) {
             if(i < n){
@@ -360,14 +360,15 @@ namespace cv
             d_shiftRow += std::chrono::duration_cast<std::chrono::duration<double, std::milli>>(end3 - begin3).count();
             d_horizontalConv += std::chrono::duration_cast<std::chrono::duration<double, std::milli>>(end4 - begin4).count();
         }
-        /*
+
         std::cout << "Timings:" << std::endl;
         std::cout << "initRow: " << d_initRow << std::endl;
         std::cout << "vertConvl " << d_verticalConvl << std::endl;
         std::cout << "shift: " << d_shiftRow << std::endl;
         std::cout << "horzConvl: " << d_horizontalConv << std::endl;
-         */
+    */
     }
+
 
 
 /*static void
