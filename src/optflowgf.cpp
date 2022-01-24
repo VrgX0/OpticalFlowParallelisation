@@ -313,40 +313,47 @@ namespace cv
             std::vector<int> test (width);
             std::iota(test.begin(), test.end(),0);
 
-            std::vector<float> b1(width), b2(width), b3(width), b4(width), b5(width), b6(width);
+            //std::vector<float> b1(width), b2(width), b3(width), b4(width), b5(width), b6(width);
             std::for_each(mainExPo,test.begin(), test.end(),
                           [=](auto x){
 
                 int w = 2 * n + 1;
+                float b1, b2, b3, b4, b5, b6;
                 std::vector<float>vec (w);
                 //from row with normal gb
                 std::transform(mainExPo, rowBuf.begin()+x, rowBuf.begin() + w + x, gb.begin(), vec.begin(), [](auto &a, auto&b){
                     return a*b;
                 });
-                b1[x] = std::accumulate(vec.begin(), vec.end(), 0.f);
+                b1 = std::accumulate(vec.begin(), vec.end(), 0.f);
                 //from xRow with normal gb
                 std::transform(mainExPo, xRowBuf.begin()+x, xRowBuf.begin() + w + x, gb.begin(), vec.begin(), [](auto &a, auto&b){
                     return a*b;
                 });
-                b3[x] = std::accumulate(vec.begin(), vec.end(), 0.f);
+                b3 = std::accumulate(vec.begin(), vec.end(), 0.f);
                 //from xxRow with normal gb
                 std::transform(mainExPo, xxRowBuf.begin()+x, xxRowBuf.begin() + w + x, gb.begin(), vec.begin(), [](auto &a, auto&b){
                     return a*b;
                 });
-                b5[x] = std::accumulate(vec.begin(), vec.end(), 0.f);
+                b5 = std::accumulate(vec.begin(), vec.end(), 0.f);
                 //from xRow with xgb[n] = 0
                 std::transform(mainExPo, rowBuf.begin()+x, rowBuf.begin() + w + x, xgb.begin(), vec.begin(), [](auto &a, auto&b){
                     return a*b;
                 });
-                b2[x] = std::accumulate(vec.begin(), vec.end(), 0.f);
+                b2 = std::accumulate(vec.begin(), vec.end(), 0.f);
                 std::transform(mainExPo, xRowBuf.begin()+x, xRowBuf.begin() + w + x, xgb.begin(), vec.begin(),[](auto &a, auto&b){
                     return a*b;
                 });
-                b6[x] = std::accumulate(vec.begin(), vec.end(), 0.f);
+                b6 = std::accumulate(vec.begin(), vec.end(), 0.f);
                 std::transform(mainExPo, rowBuf.begin()+x, rowBuf.begin()+w+x, xxgb.begin(), vec.begin(),[](auto &a, auto&b){
                     return a*b;
                 });
-                b4[x] = std::accumulate(vec.begin(), vec.end(), 0.f);
+                b4 = std::accumulate(vec.begin(), vec.end(), 0.f);
+
+                drow[x*5] = (float)(b3*ig11);
+                drow[x*5+1] = (float)(b2*ig11);
+                drow[x*5+2] = (float)(b1*ig03 + b5*ig33);
+                drow[x*5+3] = (float)(b1*ig03 + b4*ig33);
+                drow[x*5+4] = (float)(b6*ig55);
 
             });
             /*
