@@ -40,7 +40,7 @@
 //
 //M*/
 
-#include <opencv2/video.hpp>
+//#include <opencv2/video.hpp>
 //#include "opencl_kernels_video.hpp"
 #include "opencv2/core/hal/intrin.hpp"
 #include "iterator"
@@ -48,11 +48,6 @@
 #include "iostream"
 #include <numeric>
 #include <fstream>
-
-
-#if defined __APPLE__ || defined __ANDROID__
-#define SMALL_LOCALSIZE
-#endif
 
 //
 // 2D dense optical flow algorithm from the following paper:
@@ -754,43 +749,43 @@ namespace cv
 {
     namespace
     {
-        class FarnebackOpticalFlowImpl : public FarnebackOpticalFlow
+        class CustomOpticalFlowImpl
         {
         public:
-            FarnebackOpticalFlowImpl(int numLevels=5, double pyrScale=0.5, bool fastPyramids=false, int winSize=13,
+            CustomOpticalFlowImpl(int numLevels=5, double pyrScale=0.5, bool fastPyramids=false, int winSize=13,
                                      int numIters=10, int polyN=5, double polySigma=1.1, int flags=0) :
                     numLevels_(numLevels), pyrScale_(pyrScale), fastPyramids_(fastPyramids), winSize_(winSize),
                     numIters_(numIters), polyN_(polyN), polySigma_(polySigma), flags_(flags)
             {
             }
 
-            virtual int getNumLevels() const CV_OVERRIDE { return numLevels_; }
-            virtual void setNumLevels(int numLevels) CV_OVERRIDE { numLevels_ = numLevels; }
+            virtual int getNumLevels() const { return numLevels_; }
+            virtual void setNumLevels(int numLevels) { numLevels_ = numLevels; }
 
-            virtual double getPyrScale() const CV_OVERRIDE { return pyrScale_; }
-            virtual void setPyrScale(double pyrScale) CV_OVERRIDE { pyrScale_ = pyrScale; }
+            virtual double getPyrScale() const { return pyrScale_; }
+            virtual void setPyrScale(double pyrScale) { pyrScale_ = pyrScale; }
 
-            virtual bool getFastPyramids() const CV_OVERRIDE { return fastPyramids_; }
-            virtual void setFastPyramids(bool fastPyramids) CV_OVERRIDE { fastPyramids_ = fastPyramids; }
+            virtual bool getFastPyramids() const { return fastPyramids_; }
+            virtual void setFastPyramids(bool fastPyramids) { fastPyramids_ = fastPyramids; }
 
-            virtual int getWinSize() const CV_OVERRIDE { return winSize_; }
-            virtual void setWinSize(int winSize) CV_OVERRIDE { winSize_ = winSize; }
+            virtual int getWinSize() const { return winSize_; }
+            virtual void setWinSize(int winSize) { winSize_ = winSize; }
 
-            virtual int getNumIters() const CV_OVERRIDE { return numIters_; }
-            virtual void setNumIters(int numIters) CV_OVERRIDE { numIters_ = numIters; }
+            virtual int getNumIters() const { return numIters_; }
+            virtual void setNumIters(int numIters) { numIters_ = numIters; }
 
-            virtual int getPolyN() const CV_OVERRIDE { return polyN_; }
-            virtual void setPolyN(int polyN) CV_OVERRIDE { polyN_ = polyN; }
+            virtual int getPolyN() const { return polyN_; }
+            virtual void setPolyN(int polyN) { polyN_ = polyN; }
 
-            virtual double getPolySigma() const CV_OVERRIDE { return polySigma_; }
-            virtual void setPolySigma(double polySigma) CV_OVERRIDE { polySigma_ = polySigma; }
+            virtual double getPolySigma() const { return polySigma_; }
+            virtual void setPolySigma(double polySigma) { polySigma_ = polySigma; }
 
-            virtual int getFlags() const CV_OVERRIDE { return flags_; }
-            virtual void setFlags(int flags) CV_OVERRIDE { flags_ = flags; }
+            virtual int getFlags() const { return flags_; }
+            virtual void setFlags(int flags) { flags_ = flags; }
 
-            virtual void calc(InputArray I0, InputArray I1, InputOutputArray flow) CV_OVERRIDE;
+            virtual void calc(InputArray _prev0, InputArray _next0, InputOutputArray _flow0);
 
-            virtual String getDefaultName() const CV_OVERRIDE { return "DenseOpticalFlow.FarnebackOpticalFlow"; }
+            virtual String getDefaultName() const { return "DenseOpticalFlow.FarnebackOpticalFlow"; }
 
         private:
             int numLevels_;
@@ -1266,10 +1261,15 @@ private:
 
 #endif
 */
-            virtual void collectGarbage() CV_OVERRIDE {}
+            virtual void collectGarbage() {}
+
+            Ptr <CustomOpticalFlowImpl>
+            create(int numLevels, double pyrScale, bool fastPyramids, int winSize, int numIters, int polyN,
+                   double polySigma,
+                   int flags);
         };
 
-        void FarnebackOpticalFlowImpl::calc(InputArray _prev0, InputArray _next0,
+        void CustomOpticalFlowImpl::calc(InputArray _prev0, InputArray _next0,
                                             InputOutputArray _flow0)
         {
             //CV_INSTRUMENT_REGION();
@@ -1291,7 +1291,7 @@ private:
                        prev0.channels() == 1 && pyrScale_ < 1 );
 
             // If flag is set, check for integrity; if not set, allocate memory space
-            if( flags_ & OPTFLOW_USE_INITIAL_FLOW )
+            if( flags_ )
                 CV_Assert( _flow0.size() == prev0.size() && _flow0.channels() == 2 &&
                            _flow0.depth() == CV_32F );
             else
@@ -1329,7 +1329,7 @@ private:
                 //if a flow was created in previous steps, resize the previous flow to match the size of current pyramidWindow
                 if( prevFlow.empty() )
                 {
-                    if( flags_ & OPTFLOW_USE_INITIAL_FLOW )
+                    if( flags_ )
                     {
                         resize( flow0, flow, Size(width, height), 0, 0, INTER_AREA );
                         flow *= scale;
@@ -1357,7 +1357,7 @@ private:
 
                 for( i = 0; i < numIters_; i++ )
                 {
-                    if( flags_ & OPTFLOW_FARNEBACK_GAUSSIAN )
+                    if( flags_ )
                         FarnebackUpdateFlow_GaussianBlur( R[0], R[1], flow, M, winSize_, i < numIters_ - 1 );
                     else
                         FarnebackUpdateFlow_Blur( R[0], R[1], flow, M, winSize_, i < numIters_ - 1 );
@@ -1370,21 +1370,21 @@ private:
     } // namespace
 } // namespace cv
 
-void cv::calcOpticalFlowFarneback( InputArray _prev0, InputArray _next0,
-                                   InputOutputArray _flow0, double pyr_scale, int levels, int winsize,
+void calcOpticalFlowFarneback( cv::InputArray _prev0, cv::InputArray _next0,
+                                   cv::InputOutputArray _flow0, double pyr_scale, int levels, int winsize,
                                    int iterations, int poly_n, double poly_sigma, int flags )
 {
     //CV_INSTRUMENT_REGION();
 
-    Ptr<cv::FarnebackOpticalFlow> optflow;
-    optflow = makePtr<FarnebackOpticalFlowImpl>(levels,pyr_scale,false,winsize,iterations,poly_n,poly_sigma,flags);
+    cv::Ptr<cv::CustomOpticalFlowImpl> optflow;
+    optflow = cv::makePtr<cv::CustomOpticalFlowImpl>(levels,pyr_scale,false,winsize,iterations,poly_n,poly_sigma,flags);
     optflow->calc(_prev0,_next0,_flow0);
 }
 
 
-cv::Ptr<cv::FarnebackOpticalFlow> cv::FarnebackOpticalFlow::create(int numLevels, double pyrScale, bool fastPyramids, int winSize,
+cv::Ptr<cv::CustomOpticalFlowImpl> cv::CustomOpticalFlowImpl::create(int numLevels, double pyrScale, bool fastPyramids, int winSize,
                                                                    int numIters, int polyN, double polySigma, int flags)
 {
-    return makePtr<FarnebackOpticalFlowImpl>(numLevels, pyrScale, fastPyramids, winSize,
+    return makePtr<CustomOpticalFlowImpl>(numLevels, pyrScale, fastPyramids, winSize,
                                              numIters, polyN, polySigma, flags);
 }

@@ -2,7 +2,7 @@
 # C++17 implementation
 #########################
 add_executable(test simpleTest.cpp)
-add_executable(DenseFlow denseFlow.cpp optflowgf.cpp)
+add_executable(DenseFlow denseFlow.cpp)
 
 target_link_libraries(test TBB::tbb)
 target_link_libraries(DenseFlow ${OpenCV_LIBS} TBB::tbb)
