@@ -315,8 +315,8 @@ namespace cv
 
             std::vector<float> b1(width), b2(width), b3(width), b4(width), b5(width), b6(width);
             std::for_each(mainExPo,test.begin(), test.end(),
-                          [](auto x){
-                /*
+                          [=](auto x){
+
                 int w = 2 * n + 1;
                 std::vector<float>vec (w);
                 //from row with normal gb
@@ -347,7 +347,7 @@ namespace cv
                     return a*b;
                 });
                 b4[x] = std::accumulate(vec.begin(), vec.end(), 0.f);
-                */
+
             });
             /*
             std::for_each(mainExPo, test.begin(), test.end(), [&drow, &b1, &b2, &b3, &b4, &b5, &b6, ig11, ig03, ig33, ig55](auto x){
