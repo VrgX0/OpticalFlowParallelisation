@@ -312,10 +312,11 @@ namespace cv
             auto begin4 = std::chrono::high_resolution_clock::now();
             std::vector<int> test (width);
             std::iota(test.begin(), test.end(),0);
-            /*
+
             std::vector<float> b1(width), b2(width), b3(width), b4(width), b5(width), b6(width);
             std::for_each(mainExPo,test.begin(), test.end(),
-                          [n, &rowBuf, &gb, &b1, &xRowBuf, &b3, &xxRowBuf, &b5, &b2, &xgb, &b6, &xxgb, &b4, mainExPo](auto x){
+                          [n, rowBuf, &gb, &b1, xRowBuf, &b3, xxRowBuf, &b5, &b2, &xgb, &b6, &xxgb, &b4, mainExPo](auto x){
+                /*
                 int w = 2 * n + 1;
                 std::vector<float>vec (w);
                 //from row with normal gb
@@ -346,6 +347,7 @@ namespace cv
                     return a*b;
                 });
                 b4[x] = std::accumulate(vec.begin(), vec.end(), 0.f);
+                */
             });
 
             std::for_each(mainExPo, test.begin(), test.end(), [&drow, &b1, &b2, &b3, &b4, &b5, &b6, ig11, ig03, ig33, ig55](auto x){
