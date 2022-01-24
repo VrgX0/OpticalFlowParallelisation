@@ -265,11 +265,12 @@ namespace cv
             auto begin1 = std::chrono::high_resolution_clock::now();
             std::transform(mainExPo, srow0, srow0 + width, rowBuf.begin() + n,
                            [g0](float n){return n*g0;});
-            /*
+
             std::fill(mainExPo, xRowBuf.begin(), xRowBuf.end(), 0.f);
             std::fill(mainExPo, xxRowBuf.begin(), xxRowBuf.end(), 0.f);
             auto end1 = std::chrono::high_resolution_clock::now();
             auto begin2 = std::chrono::high_resolution_clock::now();
+            /*
             for( k = 1; k <= n; k++ ) //k equals to Poly_n
             {
                 g0 = g[k];
