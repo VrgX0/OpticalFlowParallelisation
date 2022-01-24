@@ -364,13 +364,14 @@ namespace cv
                 drow[x*5+3] = (float)(b1[x]*ig03 + b4[x]*ig33);
                 drow[x*5+4] = (float)(b6[x]*ig55);
             });
+             */
             auto end4 = std::chrono::high_resolution_clock::now();
 
             d_initRow += std::chrono::duration_cast<std::chrono::duration<double, std::milli>>(end1 - begin1).count();
             d_verticalConvl += std::chrono::duration_cast<std::chrono::duration<double, std::milli>>(end2 - begin2).count();
             d_shiftRow += std::chrono::duration_cast<std::chrono::duration<double, std::milli>>(end3 - begin3).count();
             d_horizontalConv += std::chrono::duration_cast<std::chrono::duration<double, std::milli>>(end4 - begin4).count();
-             */
+
         }
         /*
         std::cout << "Timings:" << std::endl;
