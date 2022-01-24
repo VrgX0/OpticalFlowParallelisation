@@ -270,7 +270,7 @@ namespace cv
             std::fill(mainExPo, xxRowBuf.begin(), xxRowBuf.end(), 0.f);
             auto end1 = std::chrono::high_resolution_clock::now();
             auto begin2 = std::chrono::high_resolution_clock::now();
-            /*
+
             for( k = 1; k <= n; k++ ) //k equals to Poly_n
             {
                 g0 = g[k];
@@ -312,7 +312,7 @@ namespace cv
             auto begin4 = std::chrono::high_resolution_clock::now();
             std::vector<int> test (width);
             std::iota(test.begin(), test.end(),0);
-
+            /*
             std::vector<float> b1(width), b2(width), b3(width), b4(width), b5(width), b6(width);
             std::for_each(mainExPo,test.begin(), test.end(),
                           [n, &rowBuf, &gb, &b1, &xRowBuf, &b3, &xxRowBuf, &b5, &b2, &xgb, &b6, &xxgb, &b4, mainExPo](auto x){
