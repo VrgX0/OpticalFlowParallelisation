@@ -786,7 +786,10 @@ namespace cv
             virtual void calc(InputArray _prev0, InputArray _next0, InputOutputArray _flow0);
 
             virtual String getDefaultName() const { return "DenseOpticalFlow.FarnebackOpticalFlow"; }
-
+            enum { OPTFLOW_USE_INITIAL_FLOW     = 4,
+                OPTFLOW_LK_GET_MIN_EIGENVALS = 8,
+                OPTFLOW_FARNEBACK_GAUSSIAN   = 256
+            };
         private:
             int numLevels_;
             double pyrScale_;
@@ -1291,7 +1294,7 @@ private:
                        prev0.channels() == 1 && pyrScale_ < 1 );
 
             // If flag is set, check for integrity; if not set, allocate memory space
-            if( flags_ )
+            if( flags_ & OPTFLOW_USE_INITIAL_FLOW)
                 CV_Assert( _flow0.size() == prev0.size() && _flow0.channels() == 2 &&
                            _flow0.depth() == CV_32F );
             else
@@ -1329,7 +1332,7 @@ private:
                 //if a flow was created in previous steps, resize the previous flow to match the size of current pyramidWindow
                 if( prevFlow.empty() )
                 {
-                    if( flags_ )
+                    if( flags_ & OPTFLOW_USE_INITIAL_FLOW)
                     {
                         resize( flow0, flow, Size(width, height), 0, 0, INTER_AREA );
                         flow *= scale;
@@ -1357,7 +1360,7 @@ private:
 
                 for( i = 0; i < numIters_; i++ )
                 {
-                    if( flags_ )
+                    if( flags_ & OPTFLOW_FARNEBACK_GAUSSIAN)
                         FarnebackUpdateFlow_GaussianBlur( R[0], R[1], flow, M, winSize_, i < numIters_ - 1 );
                     else
                         FarnebackUpdateFlow_Blur( R[0], R[1], flow, M, winSize_, i < numIters_ - 1 );
