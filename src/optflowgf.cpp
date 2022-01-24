@@ -315,7 +315,7 @@ namespace cv
 
             std::vector<float> b1(width), b2(width), b3(width), b4(width), b5(width), b6(width);
             std::for_each(mainExPo,test.begin(), test.end(),
-                          [n, rowBuf, &gb, &b1, xRowBuf, &b3, xxRowBuf, &b5, &b2, &xgb, &b6, &xxgb, &b4, mainExPo](auto x){
+                          [](auto x){
                 /*
                 int w = 2 * n + 1;
                 std::vector<float>vec (w);
@@ -349,7 +349,7 @@ namespace cv
                 b4[x] = std::accumulate(vec.begin(), vec.end(), 0.f);
                 */
             });
-
+            /*
             std::for_each(mainExPo, test.begin(), test.end(), [&drow, &b1, &b2, &b3, &b4, &b5, &b6, ig11, ig03, ig33, ig55](auto x){
                 drow[x*5] = (float)(b3[x]*ig11);
                 drow[x*5+1] = (float)(b2[x]*ig11);
