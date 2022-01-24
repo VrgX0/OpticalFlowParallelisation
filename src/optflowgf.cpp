@@ -237,7 +237,7 @@ namespace cv
         double d_initRow = 0, d_verticalConvl = 0, d_shiftRow = 0, d_horizontalConv = 0;
 
         FarnebackPrepareGaussian(n, sigma, g, xg, xxg, ig11, ig03, ig33, ig55);
-        /*
+
         std::vector<float> gb(2*n+1), xgb(2*n+1), xxgb(2*n+1);
         for (int i = 0; i < n*2+1; ++i) {
             if(i < n){
@@ -265,6 +265,7 @@ namespace cv
             auto begin1 = std::chrono::high_resolution_clock::now();
             std::transform(mainExPo, srow0, srow0 + width, rowBuf.begin() + n,
                            [g0](float n){return n*g0;});
+            /*
             std::fill(mainExPo, xRowBuf.begin(), xRowBuf.end(), 0.f);
             std::fill(mainExPo, xxRowBuf.begin(), xxRowBuf.end(), 0.f);
             auto end1 = std::chrono::high_resolution_clock::now();
@@ -359,8 +360,9 @@ namespace cv
             d_verticalConvl += std::chrono::duration_cast<std::chrono::duration<double, std::milli>>(end2 - begin2).count();
             d_shiftRow += std::chrono::duration_cast<std::chrono::duration<double, std::milli>>(end3 - begin3).count();
             d_horizontalConv += std::chrono::duration_cast<std::chrono::duration<double, std::milli>>(end4 - begin4).count();
+             */
         }
-
+        /*
         std::cout << "Timings:" << std::endl;
         std::cout << "initRow: " << d_initRow << std::endl;
         std::cout << "vertConvl " << d_verticalConvl << std::endl;
