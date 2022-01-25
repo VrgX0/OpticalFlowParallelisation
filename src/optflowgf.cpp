@@ -42,10 +42,10 @@
 
 //#include <opencv2/video.hpp>
 //#include "opencl_kernels_video.hpp"
-#include "opencv2/core/hal/intrin.hpp"
-#include "iterator"
-#include "execution"
-#include "iostream"
+//#include "opencv2/core/hal/intrin.hpp"
+//#include "iterator"
+#include <execution>
+#include <iostream>
 #include <numeric>
 #include <fstream>
 
@@ -316,7 +316,6 @@ namespace cv
             //std::vector<float> b1(width), b2(width), b3(width), b4(width), b5(width), b6(width);
             std::for_each(mainExPo,test.begin(), test.end(),
                           [=](auto x){
-
                 int w = 2 * n + 1;
                 float b1, b2, b3, b4, b5, b6;
                 std::vector<float>vec (w);

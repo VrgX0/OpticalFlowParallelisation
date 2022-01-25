@@ -1,8 +1,8 @@
 #include <iostream>
-#include <opencv2/core.hpp>
+//#include <opencv2/core.hpp>
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
-#include <opencv2/videoio.hpp>
+//#include <opencv2/videoio.hpp>
 //#include <opencv2/video.hpp>
 #include"optflowgf.cpp"
 #include <filesystem>
@@ -15,7 +15,7 @@ namespace fs = std::filesystem;
 #if defined(_WIN32)
 #define VIDEO "../vtest.avi"
 #else
-#define VIDEO "/vtest.avi"
+#define VIDEO "vtest.avi"
 #endif
 
 int main()
