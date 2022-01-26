@@ -40,19 +40,14 @@
 //
 //M*/
 
-#include <opencv2/video.hpp>
+//#include <opencv2/video.hpp>
 //#include "opencl_kernels_video.hpp"
-#include "opencv2/core/hal/intrin.hpp"
-#include "iterator"
-#include "execution"
-#include "iostream"
+//#include "opencv2/core/hal/intrin.hpp"
+#include <iterator>
+#include <execution>
+#include <iostream>
 #include <numeric>
 #include <fstream>
-
-
-#if defined __APPLE__ || defined __ANDROID__
-#define SMALL_LOCALSIZE
-#endif
 
 //
 // 2D dense optical flow algorithm from the following paper:
@@ -238,7 +233,7 @@ namespace cv
         float *xg = g + n * 2 + 1;
         float *xxg = xg + n * 2 + 1;
         double ig11, ig03, ig33, ig55;
-        auto mainExPo = std::execution::par_unseq;
+        auto mainExPo = std::execution::par;
         double d_initRow = 0, d_verticalConvl = 0, d_shiftRow = 0, d_horizontalConv = 0;
 
         FarnebackPrepareGaussian(n, sigma, g, xg, xxg, ig11, ig03, ig33, ig55);
@@ -270,10 +265,12 @@ namespace cv
             auto begin1 = std::chrono::high_resolution_clock::now();
             std::transform(mainExPo, srow0, srow0 + width, rowBuf.begin() + n,
                            [g0](float n){return n*g0;});
+
             std::fill(mainExPo, xRowBuf.begin(), xRowBuf.end(), 0.f);
             std::fill(mainExPo, xxRowBuf.begin(), xxRowBuf.end(), 0.f);
             auto end1 = std::chrono::high_resolution_clock::now();
             auto begin2 = std::chrono::high_resolution_clock::now();
+
             for( k = 1; k <= n; k++ ) //k equals to Poly_n
             {
                 g0 = g[k];
@@ -316,41 +313,49 @@ namespace cv
             std::vector<int> test (width);
             std::iota(test.begin(), test.end(),0);
 
-            std::vector<float> b1(width), b2(width), b3(width), b4(width), b5(width), b6(width);
+            //std::vector<float> b1(width), b2(width), b3(width), b4(width), b5(width), b6(width);
             std::for_each(mainExPo,test.begin(), test.end(),
-                          [n, &rowBuf, &gb, &b1, &xRowBuf, &b3, &xxRowBuf, &b5, &b2, &xgb, &b6, &xxgb, &b4, mainExPo](auto x){
+                          [=](auto x){
                 int w = 2 * n + 1;
+                float b1, b2, b3, b4, b5, b6;
                 std::vector<float>vec (w);
                 //from row with normal gb
                 std::transform(mainExPo, rowBuf.begin()+x, rowBuf.begin() + w + x, gb.begin(), vec.begin(), [](auto &a, auto&b){
                     return a*b;
                 });
-                b1[x] = std::accumulate(vec.begin(), vec.end(), 0.f);
+                b1 = std::accumulate(vec.begin(), vec.end(), 0.f);
                 //from xRow with normal gb
                 std::transform(mainExPo, xRowBuf.begin()+x, xRowBuf.begin() + w + x, gb.begin(), vec.begin(), [](auto &a, auto&b){
                     return a*b;
                 });
-                b3[x] = std::accumulate(vec.begin(), vec.end(), 0.f);
+                b3 = std::accumulate(vec.begin(), vec.end(), 0.f);
                 //from xxRow with normal gb
                 std::transform(mainExPo, xxRowBuf.begin()+x, xxRowBuf.begin() + w + x, gb.begin(), vec.begin(), [](auto &a, auto&b){
                     return a*b;
                 });
-                b5[x] = std::accumulate(vec.begin(), vec.end(), 0.f);
+                b5 = std::accumulate(vec.begin(), vec.end(), 0.f);
                 //from xRow with xgb[n] = 0
                 std::transform(mainExPo, rowBuf.begin()+x, rowBuf.begin() + w + x, xgb.begin(), vec.begin(), [](auto &a, auto&b){
                     return a*b;
                 });
-                b2[x] = std::accumulate(vec.begin(), vec.end(), 0.f);
+                b2 = std::accumulate(vec.begin(), vec.end(), 0.f);
                 std::transform(mainExPo, xRowBuf.begin()+x, xRowBuf.begin() + w + x, xgb.begin(), vec.begin(),[](auto &a, auto&b){
                     return a*b;
                 });
-                b6[x] = std::accumulate(vec.begin(), vec.end(), 0.f);
+                b6 = std::accumulate(vec.begin(), vec.end(), 0.f);
                 std::transform(mainExPo, rowBuf.begin()+x, rowBuf.begin()+w+x, xxgb.begin(), vec.begin(),[](auto &a, auto&b){
                     return a*b;
                 });
-                b4[x] = std::accumulate(vec.begin(), vec.end(), 0.f);
-            });
+                b4 = std::accumulate(vec.begin(), vec.end(), 0.f);
 
+                drow[x*5] = (float)(b3*ig11);
+                drow[x*5+1] = (float)(b2*ig11);
+                drow[x*5+2] = (float)(b1*ig03 + b5*ig33);
+                drow[x*5+3] = (float)(b1*ig03 + b4*ig33);
+                drow[x*5+4] = (float)(b6*ig55);
+
+            });
+            /*
             std::for_each(mainExPo, test.begin(), test.end(), [&drow, &b1, &b2, &b3, &b4, &b5, &b6, ig11, ig03, ig33, ig55](auto x){
                 drow[x*5] = (float)(b3[x]*ig11);
                 drow[x*5+1] = (float)(b2[x]*ig11);
@@ -358,12 +363,14 @@ namespace cv
                 drow[x*5+3] = (float)(b1[x]*ig03 + b4[x]*ig33);
                 drow[x*5+4] = (float)(b6[x]*ig55);
             });
+             */
             auto end4 = std::chrono::high_resolution_clock::now();
 
             d_initRow += std::chrono::duration_cast<std::chrono::duration<double, std::milli>>(end1 - begin1).count();
             d_verticalConvl += std::chrono::duration_cast<std::chrono::duration<double, std::milli>>(end2 - begin2).count();
             d_shiftRow += std::chrono::duration_cast<std::chrono::duration<double, std::milli>>(end3 - begin3).count();
             d_horizontalConv += std::chrono::duration_cast<std::chrono::duration<double, std::milli>>(end4 - begin4).count();
+
         }
         /*
         std::cout << "Timings:" << std::endl;
@@ -371,8 +378,9 @@ namespace cv
         std::cout << "vertConvl " << d_verticalConvl << std::endl;
         std::cout << "shift: " << d_shiftRow << std::endl;
         std::cout << "horzConvl: " << d_horizontalConv << std::endl;
-         */
+    */
     }
+
 
 
 /*static void
@@ -754,44 +762,47 @@ namespace cv
 {
     namespace
     {
-        class FarnebackOpticalFlowImpl : public FarnebackOpticalFlow
+        class CustomOpticalFlowImpl
         {
         public:
-            FarnebackOpticalFlowImpl(int numLevels=5, double pyrScale=0.5, bool fastPyramids=false, int winSize=13,
+            CustomOpticalFlowImpl(int numLevels=5, double pyrScale=0.5, bool fastPyramids=false, int winSize=13,
                                      int numIters=10, int polyN=5, double polySigma=1.1, int flags=0) :
                     numLevels_(numLevels), pyrScale_(pyrScale), fastPyramids_(fastPyramids), winSize_(winSize),
                     numIters_(numIters), polyN_(polyN), polySigma_(polySigma), flags_(flags)
             {
             }
 
-            virtual int getNumLevels() const CV_OVERRIDE { return numLevels_; }
-            virtual void setNumLevels(int numLevels) CV_OVERRIDE { numLevels_ = numLevels; }
+            virtual int getNumLevels() const { return numLevels_; }
+            virtual void setNumLevels(int numLevels) { numLevels_ = numLevels; }
 
-            virtual double getPyrScale() const CV_OVERRIDE { return pyrScale_; }
-            virtual void setPyrScale(double pyrScale) CV_OVERRIDE { pyrScale_ = pyrScale; }
+            virtual double getPyrScale() const { return pyrScale_; }
+            virtual void setPyrScale(double pyrScale) { pyrScale_ = pyrScale; }
 
-            virtual bool getFastPyramids() const CV_OVERRIDE { return fastPyramids_; }
-            virtual void setFastPyramids(bool fastPyramids) CV_OVERRIDE { fastPyramids_ = fastPyramids; }
+            virtual bool getFastPyramids() const { return fastPyramids_; }
+            virtual void setFastPyramids(bool fastPyramids) { fastPyramids_ = fastPyramids; }
 
-            virtual int getWinSize() const CV_OVERRIDE { return winSize_; }
-            virtual void setWinSize(int winSize) CV_OVERRIDE { winSize_ = winSize; }
+            virtual int getWinSize() const { return winSize_; }
+            virtual void setWinSize(int winSize) { winSize_ = winSize; }
 
-            virtual int getNumIters() const CV_OVERRIDE { return numIters_; }
-            virtual void setNumIters(int numIters) CV_OVERRIDE { numIters_ = numIters; }
+            virtual int getNumIters() const { return numIters_; }
+            virtual void setNumIters(int numIters) { numIters_ = numIters; }
 
-            virtual int getPolyN() const CV_OVERRIDE { return polyN_; }
-            virtual void setPolyN(int polyN) CV_OVERRIDE { polyN_ = polyN; }
+            virtual int getPolyN() const { return polyN_; }
+            virtual void setPolyN(int polyN) { polyN_ = polyN; }
 
-            virtual double getPolySigma() const CV_OVERRIDE { return polySigma_; }
-            virtual void setPolySigma(double polySigma) CV_OVERRIDE { polySigma_ = polySigma; }
+            virtual double getPolySigma() const { return polySigma_; }
+            virtual void setPolySigma(double polySigma) { polySigma_ = polySigma; }
 
-            virtual int getFlags() const CV_OVERRIDE { return flags_; }
-            virtual void setFlags(int flags) CV_OVERRIDE { flags_ = flags; }
+            virtual int getFlags() const { return flags_; }
+            virtual void setFlags(int flags) { flags_ = flags; }
 
-            virtual void calc(InputArray I0, InputArray I1, InputOutputArray flow) CV_OVERRIDE;
+            virtual void calc(InputArray _prev0, InputArray _next0, InputOutputArray _flow0);
 
-            virtual String getDefaultName() const CV_OVERRIDE { return "DenseOpticalFlow.FarnebackOpticalFlow"; }
-
+            virtual String getDefaultName() const { return "DenseOpticalFlow.FarnebackOpticalFlow"; }
+            enum { OPTFLOW_USE_INITIAL_FLOW     = 4,
+                OPTFLOW_LK_GET_MIN_EIGENVALS = 8,
+                OPTFLOW_FARNEBACK_GAUSSIAN   = 256
+            };
         private:
             int numLevels_;
             double pyrScale_;
@@ -1266,10 +1277,15 @@ private:
 
 #endif
 */
-            virtual void collectGarbage() CV_OVERRIDE {}
+            virtual void collectGarbage() {}
+
+            Ptr <CustomOpticalFlowImpl>
+            create(int numLevels, double pyrScale, bool fastPyramids, int winSize, int numIters, int polyN,
+                   double polySigma,
+                   int flags);
         };
 
-        void FarnebackOpticalFlowImpl::calc(InputArray _prev0, InputArray _next0,
+        void CustomOpticalFlowImpl::calc(InputArray _prev0, InputArray _next0,
                                             InputOutputArray _flow0)
         {
             //CV_INSTRUMENT_REGION();
@@ -1291,7 +1307,7 @@ private:
                        prev0.channels() == 1 && pyrScale_ < 1 );
 
             // If flag is set, check for integrity; if not set, allocate memory space
-            if( flags_ & OPTFLOW_USE_INITIAL_FLOW )
+            if( flags_ & OPTFLOW_USE_INITIAL_FLOW)
                 CV_Assert( _flow0.size() == prev0.size() && _flow0.channels() == 2 &&
                            _flow0.depth() == CV_32F );
             else
@@ -1329,7 +1345,7 @@ private:
                 //if a flow was created in previous steps, resize the previous flow to match the size of current pyramidWindow
                 if( prevFlow.empty() )
                 {
-                    if( flags_ & OPTFLOW_USE_INITIAL_FLOW )
+                    if( flags_ & OPTFLOW_USE_INITIAL_FLOW)
                     {
                         resize( flow0, flow, Size(width, height), 0, 0, INTER_AREA );
                         flow *= scale;
@@ -1357,7 +1373,7 @@ private:
 
                 for( i = 0; i < numIters_; i++ )
                 {
-                    if( flags_ & OPTFLOW_FARNEBACK_GAUSSIAN )
+                    if( flags_ & OPTFLOW_FARNEBACK_GAUSSIAN)
                         FarnebackUpdateFlow_GaussianBlur( R[0], R[1], flow, M, winSize_, i < numIters_ - 1 );
                     else
                         FarnebackUpdateFlow_Blur( R[0], R[1], flow, M, winSize_, i < numIters_ - 1 );
@@ -1370,21 +1386,21 @@ private:
     } // namespace
 } // namespace cv
 
-void cv::calcOpticalFlowFarneback( InputArray _prev0, InputArray _next0,
-                                   InputOutputArray _flow0, double pyr_scale, int levels, int winsize,
+void calcOpticalFlowFarneback( cv::InputArray _prev0, cv::InputArray _next0,
+                                   cv::InputOutputArray _flow0, double pyr_scale, int levels, int winsize,
                                    int iterations, int poly_n, double poly_sigma, int flags )
 {
     //CV_INSTRUMENT_REGION();
 
-    Ptr<cv::FarnebackOpticalFlow> optflow;
-    optflow = makePtr<FarnebackOpticalFlowImpl>(levels,pyr_scale,false,winsize,iterations,poly_n,poly_sigma,flags);
+    cv::Ptr<cv::CustomOpticalFlowImpl> optflow;
+    optflow = cv::makePtr<cv::CustomOpticalFlowImpl>(levels,pyr_scale,false,winsize,iterations,poly_n,poly_sigma,flags);
     optflow->calc(_prev0,_next0,_flow0);
 }
 
 
-cv::Ptr<cv::FarnebackOpticalFlow> cv::FarnebackOpticalFlow::create(int numLevels, double pyrScale, bool fastPyramids, int winSize,
+cv::Ptr<cv::CustomOpticalFlowImpl> cv::CustomOpticalFlowImpl::create(int numLevels, double pyrScale, bool fastPyramids, int winSize,
                                                                    int numIters, int polyN, double polySigma, int flags)
 {
-    return makePtr<FarnebackOpticalFlowImpl>(numLevels, pyrScale, fastPyramids, winSize,
+    return makePtr<CustomOpticalFlowImpl>(numLevels, pyrScale, fastPyramids, winSize,
                                              numIters, polyN, polySigma, flags);
 }

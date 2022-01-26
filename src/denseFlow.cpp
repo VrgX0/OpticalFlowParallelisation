@@ -1,9 +1,7 @@
 #include <iostream>
-#include <opencv2/core.hpp>
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
-#include <opencv2/videoio.hpp>
-#include <opencv2/video.hpp>
+#include"optflowgf.cpp"
 #include <filesystem>
 #include <chrono>
 
@@ -12,9 +10,9 @@ using namespace std;
 namespace fs = std::filesystem;
 
 #if defined(_WIN32)
-#define VIDEO "../vtest.avi"
+#define VIDEO "../Sample/vtest_000/vtest_%03d.png"
 #else
-#define VIDEO "/vtest.avi"
+#define VIDEO "Sample/vtest_000/vtest_%03d.png"
 #endif
 
 int main()
