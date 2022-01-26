@@ -7,7 +7,7 @@ add_executable(DenseFlow denseFlow.cpp)
 target_link_libraries(test TBB::tbb)
 target_link_libraries(DenseFlow TBB::tbb ${OpenCV_LIBS} )
 
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/../Sample/vtest.avi DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/../Sample DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 # gnu implementation of cpp17 parallel stl at least requires Intel's TBB
 #add_library(simpleTest STATIC cpp-impl.cpp)
 #target_link_libraries(cpp-impl PRIVATE TBB::tbb)
