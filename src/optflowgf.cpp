@@ -43,7 +43,7 @@
 //#include <opencv2/video.hpp>
 //#include "opencl_kernels_video.hpp"
 //#include "opencv2/core/hal/intrin.hpp"
-//#include "iterator"
+#include <iterator>
 #include <execution>
 #include <iostream>
 #include <numeric>
@@ -233,7 +233,7 @@ namespace cv
         float *xg = g + n * 2 + 1;
         float *xxg = xg + n * 2 + 1;
         double ig11, ig03, ig33, ig55;
-        auto mainExPo = std::execution::par_unseq;
+        auto mainExPo = std::execution::par;
         double d_initRow = 0, d_verticalConvl = 0, d_shiftRow = 0, d_horizontalConv = 0;
 
         FarnebackPrepareGaussian(n, sigma, g, xg, xxg, ig11, ig03, ig33, ig55);
