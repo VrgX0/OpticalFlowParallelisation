@@ -221,6 +221,66 @@ namespace cv
     }
 
     static void
+    FarnebackPolyExpPP( const Mat& src, Mat& dst, int n, double sigma )
+    {
+        int k, x, y;
+
+        CV_Assert( src.type() == CV_32FC1 );
+        int width = src.cols;
+        int height = src.rows;
+        AutoBuffer<float> kbuf(n*6 + 3);
+        float* g = kbuf.data() + n;
+        float* xg = g + n*2 + 1;
+        float* xxg = xg + n*2 + 1;
+        double ig11, ig03, ig33, ig55;
+
+        FarnebackPrepareGaussian(n, sigma, g, xg, xxg, ig11, ig03, ig33, ig55);
+
+        dst.create( height, width, CV_32FC(5));
+        auto _src = src.ptr<float>(0);
+        auto _dst = dst.ptr<float>(0);
+        for( y = 0; y < height; y++ )
+        {
+            for( x = 0; x < width; x++ )
+            {
+                float g0 = g[0];
+                std::vector<float> rBuf(2 * n + 1, 0.f);
+                std::vector<float> xrBuf(2 * n + 1, 0.f);
+                std::vector<float> xxrBuf(2 * n + 1,0.f);
+
+                for( int a = 0; a < 2*n+1; a++){
+                    int neighX = std::max(x + a-n, 0);
+                    neighX = std::min(neighX, width-1);
+                    rBuf[a] = _src[neighX + y * width] * g0;
+                    for(int b = 1; b <= n; b++){
+                        int neighY0 = std::max((y-b)*width, 0);
+                        int neighY1 = std::min((y+b)*width, (height-1)*width);
+                        rBuf[a] += (_src[neighX + neighY0] + _src[neighX + neighY1]) * g[b];
+                        xrBuf[a] += (_src[neighX + neighY1] - _src[neighX + neighY0]) * xg[b];
+                        xxrBuf[a] += (_src[neighX + neighY0] + _src[neighX + neighY1]) * xxg[b];
+                    }
+                }
+                double b1 = rBuf[n]*g0, b2 = 0, b3 = xrBuf[n]*g0, b4 = 0, b5 = xxrBuf[n], b6 = 0;
+                for( int a = 1; a <= n; a++){
+                    b1 += (rBuf[n+a] + rBuf[n-a]) * g[a];
+                    b2 += (rBuf[n+a] - rBuf[n-a]) * xg[a];
+                    b4 += (rBuf[n+a] + rBuf[n-a]) * xxg[a];
+                    b3 += (xrBuf[n+a] + xrBuf[n-a]) * g[a];
+                    b6 += (xrBuf[n+a] - xrBuf[n-a]) * xg[a];
+                    b5 += (xxrBuf[n+a] + xxrBuf[n-a]) * g[a];
+                }
+
+                int pixel = x+y*width;
+                _dst[pixel*5+1] = (float)(b2*ig11);
+                _dst[pixel*5] = (float)(b3*ig11);
+                _dst[pixel*5+3] = (float)(b1*ig03 + b4*ig33);
+                _dst[pixel*5+2] = (float)(b1*ig03 + b5*ig33);
+                _dst[pixel*5+4] = (float)(b6*ig55);
+            }
+        }
+    }
+
+    static void
     FarnebackPolyExpPar( const Mat& src, Mat& dst, int n, double sigma ) {
         int k, x, y;
 
@@ -233,7 +293,7 @@ namespace cv
         float *xg = g + n * 2 + 1;
         float *xxg = xg + n * 2 + 1;
         double ig11, ig03, ig33, ig55;
-        auto mainExPo = std::execution::par;
+        auto mainExPo = std::execution::par_unseq;
         double d_initRow = 0, d_verticalConvl = 0, d_shiftRow = 0, d_horizontalConv = 0;
 
         FarnebackPrepareGaussian(n, sigma, g, xg, xxg, ig11, ig03, ig33, ig55);
@@ -318,35 +378,23 @@ namespace cv
                           [=](auto x){
                 int w = 2 * n + 1;
                 float b1, b2, b3, b4, b5, b6;
-                std::vector<float>vec (w);
+                //std::vector<float>vec (w);
                 //from row with normal gb
-                std::transform(mainExPo, rowBuf.begin()+x, rowBuf.begin() + w + x, gb.begin(), vec.begin(), [](auto &a, auto&b){
-                    return a*b;
-                });
-                b1 = std::accumulate(vec.begin(), vec.end(), 0.f);
+                b1 = std::transform_reduce(mainExPo, rowBuf.begin()+x, rowBuf.begin() + w + x, gb.begin(), 0.f);
+                //b1 = std::accumulate(vec.begin(), vec.end(), 0.f);
                 //from xRow with normal gb
-                std::transform(mainExPo, xRowBuf.begin()+x, xRowBuf.begin() + w + x, gb.begin(), vec.begin(), [](auto &a, auto&b){
-                    return a*b;
-                });
-                b3 = std::accumulate(vec.begin(), vec.end(), 0.f);
+                b3 = std::transform_reduce(mainExPo, xRowBuf.begin()+x, xRowBuf.begin() + w + x, gb.begin(), 0.f);
+                //b3 = std::accumulate(vec.begin(), vec.end(), 0.f);
                 //from xxRow with normal gb
-                std::transform(mainExPo, xxRowBuf.begin()+x, xxRowBuf.begin() + w + x, gb.begin(), vec.begin(), [](auto &a, auto&b){
-                    return a*b;
-                });
-                b5 = std::accumulate(vec.begin(), vec.end(), 0.f);
+                b5 = std::transform_reduce(mainExPo, xxRowBuf.begin()+x, xxRowBuf.begin() + w + x, gb.begin(), 0.f);
+                //b5 = std::accumulate(vec.begin(), vec.end(), 0.f);
                 //from xRow with xgb[n] = 0
-                std::transform(mainExPo, rowBuf.begin()+x, rowBuf.begin() + w + x, xgb.begin(), vec.begin(), [](auto &a, auto&b){
-                    return a*b;
-                });
-                b2 = std::accumulate(vec.begin(), vec.end(), 0.f);
-                std::transform(mainExPo, xRowBuf.begin()+x, xRowBuf.begin() + w + x, xgb.begin(), vec.begin(),[](auto &a, auto&b){
-                    return a*b;
-                });
-                b6 = std::accumulate(vec.begin(), vec.end(), 0.f);
-                std::transform(mainExPo, rowBuf.begin()+x, rowBuf.begin()+w+x, xxgb.begin(), vec.begin(),[](auto &a, auto&b){
-                    return a*b;
-                });
-                b4 = std::accumulate(vec.begin(), vec.end(), 0.f);
+                b2 = std::transform_reduce(mainExPo, rowBuf.begin()+x, rowBuf.begin() + w + x, xgb.begin(), 0.f);
+                //b2 = std::accumulate(vec.begin(), vec.end(), 0.f);
+                b6 = std::transform_reduce(mainExPo, xRowBuf.begin()+x, xRowBuf.begin() + w + x, xgb.begin(), 0.f);
+                //b6 = std::accumulate(vec.begin(), vec.end(), 0.f);
+                b4 = std::transform_reduce(mainExPo, rowBuf.begin()+x, rowBuf.begin()+w+x, xxgb.begin(), 0.f);
+                //b4 = std::accumulate(vec.begin(), vec.end(), 0.f);
 
                 drow[x*5] = (float)(b3*ig11);
                 drow[x*5+1] = (float)(b2*ig11);
@@ -372,13 +420,13 @@ namespace cv
             d_horizontalConv += std::chrono::duration_cast<std::chrono::duration<double, std::milli>>(end4 - begin4).count();
 
         }
-        /*
+
         std::cout << "Timings:" << std::endl;
         std::cout << "initRow: " << d_initRow << std::endl;
         std::cout << "vertConvl " << d_verticalConvl << std::endl;
         std::cout << "shift: " << d_shiftRow << std::endl;
         std::cout << "horzConvl: " << d_horizontalConv << std::endl;
-    */
+
     }
 
 
@@ -1366,7 +1414,7 @@ private:
                     GaussianBlur(fimg, fimg, Size(smooth_sz, smooth_sz), sigma, sigma);
                     //resize frame to match pyramidWindow and store in I
                     resize( fimg, I, Size(width, height), INTER_LINEAR );
-                    FarnebackPolyExpPar( I, R[i], polyN_, polySigma_ );
+                    FarnebackPolyExpPP( I, R[i], polyN_, polySigma_ );
                 }
 
                 FarnebackUpdateMatrices( R[0], R[1], flow, M, 0, flow.rows );
