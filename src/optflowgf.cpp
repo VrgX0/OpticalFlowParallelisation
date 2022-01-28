@@ -281,6 +281,67 @@ namespace cv
     }
 
     static void
+    FarnebackPolyExpPPstl( const Mat& src, Mat& dst, int n, double sigma )
+    {
+        CV_Assert( src.type() == CV_32FC1 );
+        int width = src.cols;
+        int height = src.rows;
+        AutoBuffer<float> kbuf(n*6 + 3);
+        float* g = kbuf.data() + n;
+        float* xg = g + n*2 + 1;
+        float* xxg = xg + n*2 + 1;
+        double ig11, ig03, ig33, ig55;
+
+        FarnebackPrepareGaussian(n, sigma, g, xg, xxg, ig11, ig03, ig33, ig55);
+
+        dst.create( height, width, CV_32FC(5));
+        auto _src = src.ptr<float>(0);
+        auto src_ptr = src.ptr<float>(0);
+        auto _dst = dst.ptr<float>(0);
+
+        std::for_each(std::execution::par_unseq, _src,_src + (width * height),[=](auto &pix){
+
+            float g0 = g[0];
+            std::vector<float> rBuf((2 * n + 1)*3, 0.f);
+            int offset = 2*n+1;
+
+            auto index = &pix - src_ptr;
+            int x = index % width;
+            int y = index / width;
+
+            for( int a = 0; a < 2*n+1; a++){
+                int neighX = std::max(x + a-n, 0);
+                neighX = std::min(neighX, width-1);
+                rBuf[a] = _src[neighX + y * width] * g0;
+                for(int b = 1; b <= n; b++) {
+                    int neighY0 = std::max((y - b) * width, 0);
+                    int neighY1 = std::min((y + b) * width, (height - 1) * width);
+                    rBuf[a] += (_src[neighX + neighY0] + _src[neighX + neighY1]) * g[b];
+                    rBuf[a + offset] += (_src[neighX + neighY1] - _src[neighX + neighY0]) * xg[b];
+                    rBuf[a + 2 * offset] += (_src[neighX + neighY0] + _src[neighX + neighY1]) * xxg[b];
+                }
+            }
+
+            double b1 = rBuf[n]*g0, b2 = 0, b3 = rBuf[n + offset]*g0, b4 = 0, b5 = rBuf[n + 2*offset], b6 = 0;
+            for( int a = 1; a <= n; a++){
+                b1 += (rBuf[n+a] + rBuf[n-a]) * g[a];
+                b2 += (rBuf[n+a] - rBuf[n-a]) * xg[a];
+                b4 += (rBuf[n+a] + rBuf[n-a]) * xxg[a];
+                b3 += (rBuf[n+a+offset] + rBuf[n-a+offset]) * g[a];
+                b6 += (rBuf[n+a+offset] - rBuf[n-a+offset]) * xg[a];
+                b5 += (rBuf[n+a+offset*2] + rBuf[n-a+offset*2]) * g[a];
+            }
+
+            int pixel = x+y*width;
+            _dst[pixel*5+1] = (float)(b2*ig11);
+            _dst[pixel*5] = (float)(b3*ig11);
+            _dst[pixel*5+3] = (float)(b1*ig03 + b4*ig33);
+            _dst[pixel*5+2] = (float)(b1*ig03 + b5*ig33);
+            _dst[pixel*5+4] = (float)(b6*ig55);
+        });
+    }
+
+    static void
     FarnebackPolyExpPar( const Mat& src, Mat& dst, int n, double sigma ) {
         int k, x, y;
 
@@ -1414,7 +1475,7 @@ private:
                     GaussianBlur(fimg, fimg, Size(smooth_sz, smooth_sz), sigma, sigma);
                     //resize frame to match pyramidWindow and store in I
                     resize( fimg, I, Size(width, height), INTER_LINEAR );
-                    FarnebackPolyExpPP( I, R[i], polyN_, polySigma_ );
+                    FarnebackPolyExpPPstl( I, R[i], polyN_, polySigma_ );
                 }
 
                 FarnebackUpdateMatrices( R[0], R[1], flow, M, 0, flow.rows );
