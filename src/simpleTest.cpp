@@ -24,9 +24,9 @@ void print_results(high_resolution_clock::time_point startTime, high_resolution_
                                                                      << " ms" << std::endl;
 }
 */
-const size_t testSize = 1000;
+const size_t testSize = 100;
 
-static void FarnebackPolyExpPPstl(const float *src, float* dst, int n, double sigma )
+static void FarnebackPolyExpPPstl(float *src, float* dst, int n, double sigma )
 {
     int width = testSize;
     int height = testSize;
@@ -82,10 +82,12 @@ static void FarnebackPolyExpPPstl(const float *src, float* dst, int n, double si
 int main() {
 
     float src [testSize*testSize];
-    const float* src_ptr = src;
+    for(float & i : src){
+        i = 5.f;
+    }
+    float* src_ptr = src;
     float dst [(testSize*testSize)*5];
     float* dst_ptr = dst;
-    std::fill(src_ptr, src_ptr + testSize*testSize, 5.f);
     FarnebackPolyExpPPstl(src_ptr, dst_ptr, 5, 2);
     return 0;
 }
