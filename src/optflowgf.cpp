@@ -128,7 +128,6 @@ namespace cv
         float* xxg = xg + n*2 + 1;
         float *row = _row.data() + n*3;
         double ig11, ig03, ig33, ig55;
-        double d_initRow = 0, d_verticalConvl = 0, d_shiftRow = 0, d_horizontalConv = 0;
 
         FarnebackPrepareGaussian(n, sigma, g, xg, xxg, ig11, ig03, ig33, ig55);
 
@@ -138,15 +137,12 @@ namespace cv
             float g0 = g[0], g1, g2;
             const float *srow0 = src.ptr<float>(y), *srow1 = 0;
             float *drow = dst.ptr<float>(y);
-            auto begin1 = std::chrono::high_resolution_clock::now();
             // vertical part of convolution
             for( x = 0; x < width; x++ )
             {
                 row[x*3] = srow0[x]*g0;
                 row[x*3+1] = row[x*3+2] = 0.f;
             }
-            auto end1 = std::chrono::high_resolution_clock::now();
-            auto begin2 = std::chrono::high_resolution_clock::now();
             for( k = 1; k <= n; k++ ) //k equals to Poly_n
             {
                 g0 = g[k]; g1 = xg[k]; g2 = xxg[k];
@@ -165,8 +161,6 @@ namespace cv
                     row[x*3+2] = t2;
                 }
             }
-            auto end2 = std::chrono::high_resolution_clock::now();
-            auto begin3 = std::chrono::high_resolution_clock::now();
             // horizontal part of convolution
             // rowBuf padding left and right
             for( x = 0; x < n*3; x++ )
@@ -174,9 +168,6 @@ namespace cv
                 row[-1-x] = row[2-x];
                 row[width*3+x] = row[width*3+x-3];
             }
-            auto end3 = std::chrono::high_resolution_clock::now();
-            auto begin4 = std::chrono::high_resolution_clock::now();
-
             for( x = 0; x < width; x++ )
             {
                 g0 = g[0];
@@ -201,23 +192,12 @@ namespace cv
                 drow[x*5+3] = (float)(b1*ig03 + b4*ig33);
                 drow[x*5+2] = (float)(b1*ig03 + b5*ig33);
                 drow[x*5+4] = (float)(b6*ig55);
+
+                //std::cout << "[" << drow[x*5] << " " << drow[x*5+1] << " "<< drow[x*5+2] << " " << drow[x*5+3] << " " << drow[x*5+4] << "]";
             }
-
-            auto end4 = std::chrono::high_resolution_clock::now();
-            d_initRow += std::chrono::duration_cast<std::chrono::duration<double, std::milli>>(end1 - begin1).count();
-            d_verticalConvl += std::chrono::duration_cast<std::chrono::duration<double, std::milli>>(end2 - begin2).count();
-            d_shiftRow += std::chrono::duration_cast<std::chrono::duration<double, std::milli>>(end3 - begin3).count();
-            d_horizontalConv += std::chrono::duration_cast<std::chrono::duration<double, std::milli>>(end4 - begin4).count();
+            //std::cout << std::endl;
         }
-
         row -= n*3;
-
-        std::cout << "Timings:" << std::endl;
-        std::cout << "initRow: " << d_initRow << std::endl;
-        std::cout << "vertConvl: " << d_verticalConvl << std::endl;
-        std::cout << "shift: " << d_shiftRow << std::endl;
-        std::cout << "horzConvl: " << d_horizontalConv << std::endl;
-
     }
 
     static void
@@ -244,9 +224,10 @@ namespace cv
             for( x = 0; x < width; x++ )
             {
                 float g0 = g[0];
-                std::vector<float> rBuf(2 * n + 1, 0.f);
-                std::vector<float> xrBuf(2 * n + 1, 0.f);
-                std::vector<float> xxrBuf(2 * n + 1,0.f);
+                std::vector<float> rBuf((2 * n + 1)*3, 0.f);
+                int offset = 2*n+1;
+                //std::vector<float> xrBuf(2 * n + 1, 0.f);
+                //std::vector<float> xxrBuf(2 * n + 1,0.f);
 
                 for( int a = 0; a < 2*n+1; a++){
                     int neighX = std::max(x + a-n, 0);
@@ -256,18 +237,18 @@ namespace cv
                         int neighY0 = std::max((y-b)*width, 0);
                         int neighY1 = std::min((y+b)*width, (height-1)*width);
                         rBuf[a] += (_src[neighX + neighY0] + _src[neighX + neighY1]) * g[b];
-                        xrBuf[a] += (_src[neighX + neighY1] - _src[neighX + neighY0]) * xg[b];
-                        xxrBuf[a] += (_src[neighX + neighY0] + _src[neighX + neighY1]) * xxg[b];
+                        rBuf[a + offset] += (_src[neighX + neighY1] - _src[neighX + neighY0]) * xg[b];
+                        rBuf[a + offset*2] += (_src[neighX + neighY0] + _src[neighX + neighY1]) * xxg[b];
                     }
                 }
-                double b1 = rBuf[n]*g0, b2 = 0, b3 = xrBuf[n]*g0, b4 = 0, b5 = xxrBuf[n], b6 = 0;
+                double b1 = rBuf[n]*g0, b2 = 0, b3 = rBuf[n + offset]*g0, b4 = 0, b5 = rBuf[n + offset*2]*g0, b6 = 0;
                 for( int a = 1; a <= n; a++){
                     b1 += (rBuf[n+a] + rBuf[n-a]) * g[a];
                     b2 += (rBuf[n+a] - rBuf[n-a]) * xg[a];
                     b4 += (rBuf[n+a] + rBuf[n-a]) * xxg[a];
-                    b3 += (xrBuf[n+a] + xrBuf[n-a]) * g[a];
-                    b6 += (xrBuf[n+a] - xrBuf[n-a]) * xg[a];
-                    b5 += (xxrBuf[n+a] + xxrBuf[n-a]) * g[a];
+                    b3 += (rBuf[n+a+offset] + rBuf[n-a+offset]) * g[a];
+                    b6 += (rBuf[n+a+offset] - rBuf[n-a+offset]) * xg[a];
+                    b5 += (rBuf[n+a+offset*2] + rBuf[n-a+offset*2]) * g[a];
                 }
 
                 int pixel = x+y*width;
@@ -276,7 +257,9 @@ namespace cv
                 _dst[pixel*5+3] = (float)(b1*ig03 + b4*ig33);
                 _dst[pixel*5+2] = (float)(b1*ig03 + b5*ig33);
                 _dst[pixel*5+4] = (float)(b6*ig55);
+                //std::cout << "[" << _dst[pixel*5] << " " << _dst[pixel*5+1] << " "<< _dst[pixel*5+2] << " " << _dst[pixel*5+3] << " " << _dst[pixel*5+4] << "]";
             }
+            //std::cout << std::endl;
         }
     }
 
@@ -322,7 +305,7 @@ namespace cv
                 }
             }
 
-            double b1 = rBuf[n]*g0, b2 = 0, b3 = rBuf[n + offset]*g0, b4 = 0, b5 = rBuf[n + 2*offset], b6 = 0;
+            double b1 = rBuf[n]*g0, b2 = 0, b3 = rBuf[n + offset]*g0, b4 = 0, b5 = rBuf[n + 2*offset]*g0, b6 = 0;
             for( int a = 1; a <= n; a++){
                 b1 += (rBuf[n+a] + rBuf[n-a]) * g[a];
                 b2 += (rBuf[n+a] - rBuf[n-a]) * xg[a];
@@ -473,21 +456,7 @@ namespace cv
                 drow[x*5+4] = (float)(b6[x]*ig55);
             });
              */
-            auto end4 = std::chrono::high_resolution_clock::now();
-
-            d_initRow += std::chrono::duration_cast<std::chrono::duration<double, std::milli>>(end1 - begin1).count();
-            d_verticalConvl += std::chrono::duration_cast<std::chrono::duration<double, std::milli>>(end2 - begin2).count();
-            d_shiftRow += std::chrono::duration_cast<std::chrono::duration<double, std::milli>>(end3 - begin3).count();
-            d_horizontalConv += std::chrono::duration_cast<std::chrono::duration<double, std::milli>>(end4 - begin4).count();
-
         }
-
-        std::cout << "Timings:" << std::endl;
-        std::cout << "initRow: " << d_initRow << std::endl;
-        std::cout << "vertConvl " << d_verticalConvl << std::endl;
-        std::cout << "shift: " << d_shiftRow << std::endl;
-        std::cout << "horzConvl: " << d_horizontalConv << std::endl;
-
     }
 
 
@@ -1475,7 +1444,7 @@ private:
                     GaussianBlur(fimg, fimg, Size(smooth_sz, smooth_sz), sigma, sigma);
                     //resize frame to match pyramidWindow and store in I
                     resize( fimg, I, Size(width, height), INTER_LINEAR );
-                    FarnebackPolyExpPPstl( I, R[i], polyN_, polySigma_ );
+                    FarnebackPolyExpPP( I, R[i], polyN_, polySigma_ );
                 }
 
                 FarnebackUpdateMatrices( R[0], R[1], flow, M, 0, flow.rows );

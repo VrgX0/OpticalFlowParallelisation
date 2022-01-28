@@ -14,7 +14,7 @@ namespace fs = std::filesystem;
 using std::chrono::duration;
 using std::chrono::high_resolution_clock;
 using std::chrono::duration_cast;
-
+/*
 double getDuration (high_resolution_clock::time_point start, high_resolution_clock::time_point end){
     return duration_cast<duration<double, std::milli>>(end - start).count();
 }
@@ -23,69 +23,70 @@ void print_results(high_resolution_clock::time_point startTime, high_resolution_
     std::cout << "Time " << duration_cast<duration<double, std::milli>>(endTime - startTime).count()
                                                                      << " ms" << std::endl;
 }
+*/
+const size_t testSize = 1000;
 
-const size_t testSize = 1000000000;
+static void FarnebackPolyExpPPstl(const float *src, float* dst, int n, double sigma )
+{
+    int width = testSize;
+    int height = testSize;
+    std::vector<float> kbuf(n*6 + 3);
+    float* g = kbuf.data() + n;
+    float* xg = g + n*2 + 1;
+    float* xxg = xg + n*2 + 1;
+    double ig11 = 0.3, ig03 = 0.2, ig33 = 0.1, ig55 = 0.4;
+    std::fill(kbuf.begin(),kbuf.end(),0.12);
+    std::for_each(std::execution::par_unseq, src,src + (width * height),[=](auto &pix){
+
+        float g0 = g[0];
+        std::vector<float> rBuf((2 * n + 1)*3, 0.f);
+        int offset = 2*n+1;
+
+        auto index = &pix - src;
+        int x = index % width;
+        int y = index / width;
+
+        for( int a = 0; a < 2*n+1; a++){
+            int neighX = std::max(x + a-n, 0);
+            neighX = std::min(neighX, width-1);
+            rBuf[a] = src[neighX + y * width] * g0;
+            for(int b = 1; b <= n; b++) {
+                int neighY0 = std::max((y - b) * width, 0);
+                int neighY1 = std::min((y + b) * width, (height - 1) * width);
+                rBuf[a] += (src[neighX + neighY0] + src[neighX + neighY1]) * g[b];
+                rBuf[a + offset] += (src[neighX + neighY1] - src[neighX + neighY0]) * xg[b];
+                rBuf[a + 2 * offset] += (src[neighX + neighY0] + src[neighX + neighY1]) * xxg[b];
+            }
+        }
+
+        double b1 = rBuf[n]*g0, b2 = 0, b3 = rBuf[n + offset]*g0, b4 = 0, b5 = rBuf[n + 2*offset]*g0, b6 = 0;
+        for( int a = 1; a <= n; a++){
+            b1 += (rBuf[n+a] + rBuf[n-a]) * g[a];
+            b2 += (rBuf[n+a] - rBuf[n-a]) * xg[a];
+            b4 += (rBuf[n+a] + rBuf[n-a]) * xxg[a];
+            b3 += (rBuf[n+a+offset] + rBuf[n-a+offset]) * g[a];
+            b6 += (rBuf[n+a+offset] - rBuf[n-a+offset]) * xg[a];
+            b5 += (rBuf[n+a+offset*2] + rBuf[n-a+offset*2]) * g[a];
+        }
+
+        int pixel = x+y*width;
+        dst[pixel*5+1] = (float)(b2*ig11);
+        dst[pixel*5] = (float)(b3*ig11);
+        dst[pixel*5+3] = (float)(b1*ig03 + b4*ig33);
+        dst[pixel*5+2] = (float)(b1*ig03 + b5*ig33);
+        dst[pixel*5+4] = (float)(b6*ig55);
+    });
+}
+
 
 int main() {
-    const auto start = high_resolution_clock::now();
-    std::random_device rd;
-    // generate randoms
-    std::vector<double> doubles(testSize);
-    for (auto &d: doubles) {
-        d = static_cast<double>(rd());
-    }
-    std::vector<double>doublesB(doubles);
-    std::vector<double> doublesC(testSize);
 
-    const auto firstStepTimeBegin = high_resolution_clock::now();
-    std::transform( doublesB.begin(), doublesB.end(), doublesC.begin(),
-                    [](double v){return v*v;} );
-    const auto firstStepTimeEnd = high_resolution_clock::now();
-    print_results(firstStepTimeBegin, firstStepTimeEnd);
-
-    const auto secondStepTimeBegin= high_resolution_clock::now();
-    std::transform(std::execution::seq, doublesB.begin(), doublesB.end(), doublesC.begin(),
-                   [](double v){return v*v;} );
-    const auto secondStepTimeEnd = high_resolution_clock::now();
-    print_results(secondStepTimeBegin, secondStepTimeEnd);
-
-    const auto thirdStepTimeBegin= high_resolution_clock::now();
-    std::transform(std::execution::par, doublesB.begin(), doublesB.end(), doublesC.begin(),
-                   [](double v){return v*v;} );
-    const auto thirdStepTimeEnd = high_resolution_clock::now();
-    print_results(thirdStepTimeBegin, thirdStepTimeEnd);
-
-    const auto fourthStepTimeBegin= high_resolution_clock::now();
-    std::transform(std::execution::par_unseq, doublesB.begin(), doublesB.end(), doublesC.begin(),
-                   [](double v){return v*v;} );
-    const auto fourthStepTimeEnd = high_resolution_clock::now();
-    print_results(fourthStepTimeBegin, fourthStepTimeEnd);
-
-    fs::path originalPath = fs::current_path();
-    fs::current_path(originalPath/R"(..\..\..\src)");
-
-    double durationToOne = getDuration(start, firstStepTimeBegin);
-    double durationStepOne = getDuration(start,firstStepTimeEnd);
-    double durationToTwo = getDuration(start, secondStepTimeBegin);
-    double durationStepTwo = getDuration(start,secondStepTimeEnd);
-    double durationToThree = getDuration(start, thirdStepTimeBegin);
-    double durationStepThree = getDuration(start, thirdStepTimeEnd);
-    double durationToFour = getDuration(start, fourthStepTimeBegin);
-    double durationStepFour = getDuration(start, fourthStepTimeEnd);
-
-    std::ofstream myFile;
-    myFile.open ("example.txt");
-    myFile << "durationToOne:" << durationToOne << "\n" << "durationStepOne:" << durationStepOne << "\n"
-           << "durationToTwo:" << durationToTwo << "\n" << "durationStepTwo:" << durationStepTwo << "\n"
-           << "durationToThree:" << durationToThree << "\n" << "durationStepThree:" << durationStepThree << "\n"
-           << "durationToFour:" << durationToFour << "\n" << "durationStepFour:" << durationStepFour << "\n";
-    myFile.close();
-    auto cmd = "py testPlotter.py";
-
-
-    system(cmd);
-
-    fs::current_path(originalPath);
+    float src [testSize*testSize];
+    const float* src_ptr = src;
+    float dst [(testSize*testSize)*5];
+    float* dst_ptr = dst;
+    std::fill(src_ptr, src_ptr + testSize*testSize, 5.f);
+    FarnebackPolyExpPPstl(src_ptr, dst_ptr, 5, 2);
     return 0;
 }
 
