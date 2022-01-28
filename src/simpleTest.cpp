@@ -81,13 +81,13 @@ static void FarnebackPolyExpPPstl(float *src, float* dst, int n, double sigma )
 
 int main() {
 
-    float src [testSize*testSize];
+    std::vector<float>src (testSize*testSize);
     for(float & i : src){
         i = 5.f;
     }
-    float* src_ptr = src;
-    float dst [(testSize*testSize)*5];
-    float* dst_ptr = dst;
+    float* src_ptr = src.data();
+    std::vector<float>dst ((testSize*testSize)*5);
+    float* dst_ptr = dst.data();
     FarnebackPolyExpPPstl(src_ptr, dst_ptr, 5, 2);
     return 0;
 }
