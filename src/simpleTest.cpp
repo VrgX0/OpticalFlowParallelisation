@@ -25,16 +25,16 @@ static void FarnebackPolyExpPPstl(float *src, float* dst)
 {
     int width = testSize;
     int height = testSize;
-    float kbuf[n*6 + 3];
-    float* kbuf_ptr = kbuf;
-    float* g = kbuf_ptr + n;
-    float* xg = g + n*2 + 1;
-    float* xxg = xg + n*2 + 1;
+    std::vector<float> kbuf (n*6 + 3);
+    //float* g = kbuf.data() + n;
+    //float* xg = g + n*2 + 1;
+    //float* xxg = xg + n*2 + 1;
     double ig11 = 0.3, ig03 = 0.2, ig33 = 0.1, ig55 = 0.4;
-    std::fill(kbuf_ptr,kbuf_ptr+n*6+3,0.12);
+    std::fill(kbuf.begin(),kbuf.end(),0.12);
     std::for_each(std::execution::par_unseq, src,src + (width * height),[=](auto &pix){
-
-        float g0 = g[0];
+        int xgOff = n + n*2 +1;
+        int xxgOff = xgOff +n*2;
+        float g0 = kbuf[0+n];
         float rBuf[(2 * n + 1)*3] = {0.f};
         int offset = 2*n+1;
 
@@ -49,20 +49,21 @@ static void FarnebackPolyExpPPstl(float *src, float* dst)
             for(int b = 1; b <= n; b++) {
                 int neighY0 = std::max((y - b) * width, 0);
                 int neighY1 = std::min((y + b) * width, (height - 1) * width);
-                rBuf[a] += (src[neighX + neighY0] + src[neighX + neighY1]) * g[b];
-                rBuf[a + offset] += (src[neighX + neighY1] - src[neighX + neighY0]) * xg[b];
-                rBuf[a + 2 * offset] += (src[neighX + neighY0] + src[neighX + neighY1]) * xxg[b];
+                rBuf[a] += (src[neighX + neighY0] + src[neighX + neighY1]) * kbuf[b+n];
+                rBuf[a + offset] += (src[neighX + neighY1] - src[neighX + neighY0]) * kbuf[b+xgOff];
+                rBuf[a + 2 * offset] += (src[neighX + neighY0] + src[neighX + neighY1]) * kbuf[b+xxgOff];
             }
         }
 
         double b1 = rBuf[n]*g0, b2 = 0, b3 = rBuf[n + offset]*g0, b4 = 0, b5 = rBuf[n + 2*offset]*g0, b6 = 0;
         for( int a = 1; a <= n; a++){
-            b1 += (rBuf[n+a] + rBuf[n-a]) * g[a];
-            b2 += (rBuf[n+a] - rBuf[n-a]) * xg[a];
-            b4 += (rBuf[n+a] + rBuf[n-a]) * xxg[a];
-            b3 += (rBuf[n+a+offset] + rBuf[n-a+offset]) * g[a];
-            b6 += (rBuf[n+a+offset] - rBuf[n-a+offset]) * xg[a];
-            b5 += (rBuf[n+a+offset*2] + rBuf[n-a+offset*2]) * g[a];
+
+            b1 += (rBuf[n+a] + rBuf[n-a]) * kbuf[a+n];
+            b2 += (rBuf[n+a] - rBuf[n-a]) * kbuf[a+xgOff];
+            b4 += (rBuf[n+a] + rBuf[n-a]) * kbuf[a+xxgOff];
+            b3 += (rBuf[n+a+offset] + rBuf[n-a+offset]) * kbuf[a+n];
+            b6 += (rBuf[n+a+offset] - rBuf[n-a+offset]) * kbuf[a+xgOff];
+            b5 += (rBuf[n+a+offset*2] + rBuf[n-a+offset*2]) * kbuf[a+n];
         }
 
         int pixel = x+y*width;
@@ -77,15 +78,13 @@ static void FarnebackPolyExpPPstl(float *src, float* dst)
 
 int main() {
 
-    float src [testSize*testSize];
+    std::vector<float> src (testSize*testSize);
     for(float & i : src){
         i = 5.f;
     }
-    float* src_ptr = src;
-    float dst [(testSize*testSize)*5];
-    float* dst_ptr = dst;
+    std::vector<float> dst ((testSize*testSize)*5);
     std::cout << "begin" << std::endl;
-    FarnebackPolyExpPPstl(src_ptr, dst_ptr);
+    FarnebackPolyExpPPstl(src.data(), dst.data());
     std::cout << "end" << std::endl;
     return 0;
 }
