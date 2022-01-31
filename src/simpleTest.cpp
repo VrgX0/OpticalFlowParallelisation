@@ -3,6 +3,7 @@
 #include <chrono>
 #include <algorithm>
 #include <execution>
+#include <opencv2/opencv.hpp>
 
 using std::chrono::duration;
 using std::chrono::high_resolution_clock;
@@ -21,34 +22,36 @@ const size_t testSize = 1000;
 const int n = 5;
 
 
-static void FarnebackPolyExpPPstl(float *src, float* dst)
+static void FarnebackPolyExpPPstl(cv::Mat& src, cv::Mat& dst)
 {
     int width = testSize;
     int height = testSize;
     std::vector<float> kbuf (n*6 + 3);
     double ig11 = 0.3, ig03 = 0.2, ig33 = 0.1, ig55 = 0.4;
     std::fill(kbuf.begin(),kbuf.end(),0.12);
-    std::for_each(std::execution::par_unseq, src,src + (width * height),[=](auto &pix){
+    auto src_ptr = src.ptr<float>(0);
+    auto dst_ptr = dst.ptr<float>(0);
+    std::for_each(std::execution::par_unseq, src_ptr,src_ptr + (width * height),[=](auto &pix){
         int xgOff = n + n*2 +1;
         int xxgOff = xgOff +n*2;
         float g0 = kbuf[0+n];
         std::vector<float> rBuf((2 * n + 1)*3,0.f);
         int offset = 2*n+1;
 
-        auto index = &pix - src;
+        auto index = &pix - src_ptr;
         int x = index % width;
         int y = index / width;
 
         for( int a = 0; a < 2*n+1; a++){
             int neighX = std::max(x + a-n, 0);
             neighX = std::min(neighX, width-1);
-            rBuf[a] = src[neighX + y * width] * g0;
+            rBuf[a] = src_ptr[neighX + y * width] * g0;
             for(int b = 1; b <= n; b++) {
                 int neighY0 = std::max((y - b) * width, 0);
                 int neighY1 = std::min((y + b) * width, (height - 1) * width);
-                rBuf[a] += (src[neighX + neighY0] + src[neighX + neighY1]) * kbuf[b+n];
-                rBuf[a + offset] += (src[neighX + neighY1] - src[neighX + neighY0]) * kbuf[b+xgOff];
-                rBuf[a + 2 * offset] += (src[neighX + neighY0] + src[neighX + neighY1]) * kbuf[b+xxgOff];
+                rBuf[a] += (src_ptr[neighX + neighY0] + src_ptr[neighX + neighY1]) * kbuf[b+n];
+                rBuf[a + offset] += (src_ptr[neighX + neighY1] - src_ptr[neighX + neighY0]) * kbuf[b+xgOff];
+                rBuf[a + 2 * offset] += (src_ptr[neighX + neighY0] + src_ptr[neighX + neighY1]) * kbuf[b+xxgOff];
             }
         }
 
@@ -64,11 +67,11 @@ static void FarnebackPolyExpPPstl(float *src, float* dst)
         }
 
         int pixel = x+y*width;
-        dst[pixel*5+1] = (float)(b2*ig11);
-        dst[pixel*5] = (float)(b3*ig11);
-        dst[pixel*5+3] = (float)(b1*ig03 + b4*ig33);
-        dst[pixel*5+2] = (float)(b1*ig03 + b5*ig33);
-        dst[pixel*5+4] = (float)(b6*ig55);
+        dst_ptr[pixel*5+1] = (float)(b2*ig11);
+        dst_ptr[pixel*5] = (float)(b3*ig11);
+        dst_ptr[pixel*5+3] = (float)(b1*ig03 + b4*ig33);
+        dst_ptr[pixel*5+2] = (float)(b1*ig03 + b5*ig33);
+        dst_ptr[pixel*5+4] = (float)(b6*ig55);
     });
 }
 
@@ -79,9 +82,11 @@ int main() {
     for(float & i : src){
         i = 5.f;
     }
+    cv::Mat srcMat = cv::Mat(testSize,testSize,CV_32FC1,src.data());
     std::vector<float> dst ((testSize*testSize)*5);
+    cv::Mat dstMat = cv::Mat(testSize,testSize,CV_32FC(5),dst.data());
     std::cout << "begin" << std::endl;
-    FarnebackPolyExpPPstl(src.data(), dst.data());
+    FarnebackPolyExpPPstl(srcMat, dstMat);
     std::cout << "end" << std::endl;
     return 0;
 }
