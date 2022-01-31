@@ -29,6 +29,7 @@ static void FarnebackPolyExpPPstl(cv::Mat& src, cv::Mat& dst)
     std::vector<float> kbuf (n*6 + 3);
     double ig11 = 0.3, ig03 = 0.2, ig33 = 0.1, ig55 = 0.4;
     std::fill(kbuf.begin(),kbuf.end(),0.12);
+    dst.create(testSize,testSize,CV_32FC(5));
     auto src_ptr = src.ptr<float>(0);
     auto dst_ptr = dst.ptr<float>(0);
     std::for_each(std::execution::par_unseq, src_ptr,src_ptr + (width * height),[=](auto &pix){
@@ -77,16 +78,22 @@ static void FarnebackPolyExpPPstl(cv::Mat& src, cv::Mat& dst)
 
 
 int main() {
-
-    std::vector<float> src (testSize*testSize);
+    cv::Mat src;
+    cv::Mat dst;
+    src.create(testSize, testSize, CV_32FC1);
+    for (int i = 0; i < testSize*testSize; ++i) {
+        src.at<float>(i) = 5.f;
+    }
+    /*std::vector<float> src (testSize*testSize);
     for(float & i : src){
         i = 5.f;
     }
-    cv::Mat srcMat = cv::Mat(testSize,testSize,CV_32FC1,src.data());
-    std::vector<float> dst ((testSize*testSize)*5);
-    cv::Mat dstMat = cv::Mat(testSize,testSize,CV_32FC(5),dst.data());
+     */
+    //cv::Mat srcMat = cv::Mat(testSize,testSize,CV_32FC1,src.data());
+    //std::vector<float> dst ((testSize*testSize)*5);
+    //cv::Mat dstMat = cv::Mat(testSize,testSize,CV_32FC(5),dst.data());
     std::cout << "begin" << std::endl;
-    FarnebackPolyExpPPstl(srcMat, dstMat);
+    FarnebackPolyExpPPstl(src, dst);
     std::cout << "end" << std::endl;
     return 0;
 }
