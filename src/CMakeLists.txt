@@ -16,6 +16,6 @@ file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/../Sample DESTINATION ${CMAKE_CURRENT_BINA
 if (CMAKE_CXX_COMPILER_ID STREQUAL "NVHPC")
     message("Using Nvidia's HPC SDK Compiler for C++ implementation, enabling stdpar GPU offloading")
     # enable GPU offloading for C++17 parallel STL calls
-    target_compile_options(test PUBLIC "-stdpar")
-    target_link_options(test PUBLIC "-stdpar")
+    target_compile_options(DenseFlow PUBLIC "-stdpar")
+    target_link_options(DenseFlow PUBLIC "-stdpar")
 endif()

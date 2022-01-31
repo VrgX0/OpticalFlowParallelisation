@@ -1,7 +1,7 @@
 #include <iostream>
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
-#include"optflowgf.cpp"
+#include "optflowgf.cpp"
 #include <filesystem>
 #include <chrono>
 
@@ -17,6 +17,7 @@ namespace fs = std::filesystem;
 
 int main()
 {
+    cout << "start optflow" << endl;
     //VideoCapture capture(R"(D:\MPI-Sintel-complete\training\clean\bamboo_1\frame_%04d.png)");
     VideoCapture capture((fs::current_path() / VIDEO).generic_string());
 
