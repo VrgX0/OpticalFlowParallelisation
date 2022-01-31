@@ -18,4 +18,6 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "NVHPC")
     # enable GPU offloading for C++17 parallel STL calls
     target_compile_options(DenseFlow PUBLIC "-stdpar")
     target_link_options(DenseFlow PUBLIC "-stdpar")
+    target_compile_options(test PUBLIC "-stdpar")
+    target_link_options(test PUBLIC "-stdpar")
 endif()
