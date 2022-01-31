@@ -1,8 +1,9 @@
 
 #include <iostream>
 #include <chrono>
+#include <algorithm>
+#include <vector>
 #include <execution>
-
 
 using std::chrono::duration;
 using std::chrono::high_resolution_clock;
@@ -18,21 +19,24 @@ void print_results(high_resolution_clock::time_point startTime, high_resolution_
 }
 */
 const size_t testSize = 100;
+const int n = 5;
 
-static void FarnebackPolyExpPPstl(float *src, float* dst, int n, double sigma )
+
+static void FarnebackPolyExpPPstl(float *src, float* dst)
 {
     int width = testSize;
     int height = testSize;
-    std::vector<float> kbuf(n*6 + 3);
-    float* g = kbuf.data() + n;
+    float kbuf[n*6 + 3];
+    float* kbuf_ptr = kbuf;
+    float* g = kbuf_ptr + n;
     float* xg = g + n*2 + 1;
     float* xxg = xg + n*2 + 1;
     double ig11 = 0.3, ig03 = 0.2, ig33 = 0.1, ig55 = 0.4;
-    std::fill(kbuf.begin(),kbuf.end(),0.12);
+    std::fill(kbuf_ptr,kbuf_ptr+n*6+3,0.12);
     std::for_each(std::execution::par_unseq, src,src + (width * height),[=](auto &pix){
 
         float g0 = g[0];
-        std::vector<float> rBuf((2 * n + 1)*3, 0.f);
+        float rBuf[(2 * n + 1)*3] = {0.f};
         int offset = 2*n+1;
 
         auto index = &pix - src;
@@ -74,15 +78,15 @@ static void FarnebackPolyExpPPstl(float *src, float* dst, int n, double sigma )
 
 int main() {
 
-    std::vector<float>src (testSize*testSize);
+    float src [testSize*testSize];
     for(float & i : src){
         i = 5.f;
     }
-    float* src_ptr = src.data();
-    std::vector<float>dst ((testSize*testSize)*5);
-    float* dst_ptr = dst.data();
+    float* src_ptr = src;
+    float dst [(testSize*testSize)*5];
+    float* dst_ptr = dst;
     std::cout << "begin" << std::endl;
-    FarnebackPolyExpPPstl(src_ptr, dst_ptr, 5, 2);
+    FarnebackPolyExpPPstl(src_ptr, dst_ptr);
     std::cout << "end" << std::endl;
     return 0;
 }
