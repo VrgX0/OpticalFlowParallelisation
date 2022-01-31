@@ -88,7 +88,9 @@ int main() {
     float* src_ptr = src.data();
     std::vector<float>dst ((testSize*testSize)*5);
     float* dst_ptr = dst.data();
+    std::cout << "begin" << std::endl;
     FarnebackPolyExpPPstl(src_ptr, dst_ptr, 5, 2);
+    std::cout << "end" << std::endl;
     return 0;
 }
 
