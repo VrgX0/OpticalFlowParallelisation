@@ -40,14 +40,10 @@
 //
 //M*/
 
-//#include <opencv2/video.hpp>
-//#include "opencl_kernels_video.hpp"
-//#include "opencv2/core/hal/intrin.hpp"
 #include <iterator>
 #include <execution>
 #include <iostream>
 #include <numeric>
-#include <fstream>
 
 //
 // 2D dense optical flow algorithm from the following paper:
@@ -269,7 +265,7 @@ namespace cv
         CV_Assert( src.type() == CV_32FC1 );
         int width = src.cols;
         int height = src.rows;
-        AutoBuffer<float> kbuf(n*6 + 3);
+        std::vector<float> kbuf(n*6 + 3);
         float* g = kbuf.data() + n;
         float* xg = g + n*2 + 1;
         float* xxg = xg + n*2 + 1;
@@ -284,7 +280,9 @@ namespace cv
 
         std::for_each(std::execution::par_unseq, _src,_src + (width * height),[=](auto &pix){
 
-            float g0 = g[0];
+            float g0 = kbuf[0+n];
+            int xgOff = n + n*2 +1;
+            int xxgOff = xgOff +n*2+1;
             std::vector<float> rBuf((2 * n + 1)*3, 0.f);
             int offset = 2*n+1;
 
@@ -299,20 +297,20 @@ namespace cv
                 for(int b = 1; b <= n; b++) {
                     int neighY0 = std::max((y - b) * width, 0);
                     int neighY1 = std::min((y + b) * width, (height - 1) * width);
-                    rBuf[a] += (_src[neighX + neighY0] + _src[neighX + neighY1]) * g[b];
-                    rBuf[a + offset] += (_src[neighX + neighY1] - _src[neighX + neighY0]) * xg[b];
-                    rBuf[a + 2 * offset] += (_src[neighX + neighY0] + _src[neighX + neighY1]) * xxg[b];
+                    rBuf[a] += (_src[neighX + neighY0] + _src[neighX + neighY1]) * kbuf[b+n];
+                    rBuf[a + offset] += (_src[neighX + neighY1] - _src[neighX + neighY0]) * kbuf[b+xgOff];
+                    rBuf[a + 2 * offset] += (_src[neighX + neighY0] + _src[neighX + neighY1]) * kbuf[b+xxgOff];
                 }
             }
 
             double b1 = rBuf[n]*g0, b2 = 0, b3 = rBuf[n + offset]*g0, b4 = 0, b5 = rBuf[n + 2*offset]*g0, b6 = 0;
             for( int a = 1; a <= n; a++){
-                b1 += (rBuf[n+a] + rBuf[n-a]) * g[a];
-                b2 += (rBuf[n+a] - rBuf[n-a]) * xg[a];
-                b4 += (rBuf[n+a] + rBuf[n-a]) * xxg[a];
-                b3 += (rBuf[n+a+offset] + rBuf[n-a+offset]) * g[a];
-                b6 += (rBuf[n+a+offset] - rBuf[n-a+offset]) * xg[a];
-                b5 += (rBuf[n+a+offset*2] + rBuf[n-a+offset*2]) * g[a];
+                b1 += (rBuf[n+a] + rBuf[n-a]) * kbuf[a+n];
+                b2 += (rBuf[n+a] - rBuf[n-a]) * kbuf[a+xgOff];
+                b4 += (rBuf[n+a] + rBuf[n-a]) * kbuf[a+xxgOff];
+                b3 += (rBuf[n+a+offset] + rBuf[n-a+offset]) * kbuf[a+n];
+                b6 += (rBuf[n+a+offset] - rBuf[n-a+offset]) * kbuf[a+xgOff];
+                b5 += (rBuf[n+a+offset*2] + rBuf[n-a+offset*2]) * kbuf[a+n];
             }
 
             int pixel = x+y*width;
@@ -1444,7 +1442,7 @@ private:
                     GaussianBlur(fimg, fimg, Size(smooth_sz, smooth_sz), sigma, sigma);
                     //resize frame to match pyramidWindow and store in I
                     resize( fimg, I, Size(width, height), INTER_LINEAR );
-                    FarnebackPolyExpPP( I, R[i], polyN_, polySigma_ );
+                    FarnebackPolyExpPPstl( I, R[i], polyN_, polySigma_ );
                 }
 
                 FarnebackUpdateMatrices( R[0], R[1], flow, M, 0, flow.rows );
