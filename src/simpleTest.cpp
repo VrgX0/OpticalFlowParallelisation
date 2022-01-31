@@ -2,7 +2,6 @@
 #include <iostream>
 #include <chrono>
 #include <algorithm>
-#include <vector>
 #include <execution>
 
 using std::chrono::duration;
