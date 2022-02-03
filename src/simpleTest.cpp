@@ -78,22 +78,25 @@ static void FarnebackPolyExpPPstl(cv::Mat& src, cv::Mat& dst)
 
 
 int main() {
-    cv::Mat src;
-    cv::Mat dst;
-    src.create(testSize, testSize, CV_32FC1);
+    auto src = new cv::Mat(testSize, testSize, CV_32FC1);
+    auto dst = new cv::Mat;
+    //src.create(testSize, testSize, CV_32FC1);
+
     for (int i = 0; i < testSize*testSize; ++i) {
-        src.at<float>(i) = 5.f;
+        src->at<float>(i) = 5.f;
     }
-    /*std::vector<float> src (testSize*testSize);
+
+    //std::vector<float> src (testSize*testSize);
+    /*
     for(float & i : src){
         i = 5.f;
     }
-     */
+    */
     //cv::Mat srcMat = cv::Mat(testSize,testSize,CV_32FC1,src.data());
     //std::vector<float> dst ((testSize*testSize)*5);
     //cv::Mat dstMat = cv::Mat(testSize,testSize,CV_32FC(5),dst.data());
     std::cout << "begin" << std::endl;
-    FarnebackPolyExpPPstl(src, dst);
+    FarnebackPolyExpPPstl(*src, *dst);
     std::cout << "end" << std::endl;
     return 0;
 }
