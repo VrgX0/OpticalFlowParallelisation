@@ -3,6 +3,7 @@
 #include <chrono>
 #include <algorithm>
 #include <execution>
+#include <vector>
 #include <opencv2/opencv.hpp>
 
 using std::chrono::duration;
@@ -20,10 +21,10 @@ void print_results(high_resolution_clock::time_point startTime, high_resolution_
 */
 const size_t testWidth = 760;
 const size_t testHeight = 580;
+int n = 5;
 
 
-
-static void FarnebackPolyExpPPstl(cv::Mat& src, cv::Mat& dst, int n, double sigma)
+static void FarnebackPolyExpPPstl(cv::Mat& src, cv::Mat& dst)
 {
     int width = testWidth;
     int height = testHeight;
@@ -79,31 +80,16 @@ static void FarnebackPolyExpPPstl(cv::Mat& src, cv::Mat& dst, int n, double sigm
 
 
 int main() {
-
-    //auto src = new cv::Mat(testSize, testSize, CV_32FC1);
-    //auto dst = new cv::Mat(testSize, testSize, CV_32FC(5));
-    //src.create(testSize, testSize, CV_32FC1);
-    /*
-    for (int i = 0; i < testSize*testSize; ++i) {
-        src->at<float>(i) = 5.f;
-    }
-    */
-    std::vector<float> src (testWidth*testHeight);
-    //original src Mat contains Greyscale values between 0 and 255
+    std::vector<float> src (testHeight * testWidth);
     for(float & i : src){
-        int randNum = rand()%(254-1 + 1) + 1;
-        i = (float)randNum;
+        i = 5.f;
     }
-
     cv::Mat srcMat = cv::Mat(testHeight,testWidth,CV_32FC1,src.data());
-    std::vector<float> dst ((testWidth*testHeight)*5);
+    std::vector<float> dst ((testHeight*testWidth)*5);
     cv::Mat dstMat = cv::Mat(testHeight,testWidth,CV_32FC(5),dst.data());
-    auto begin = std::chrono::high_resolution_clock::now();
-    FarnebackPolyExpPPstl(srcMat, dstMat, 5, 1.2);
-    auto end = std::chrono::high_resolution_clock::now();
-    auto duration = std::chrono::duration_cast<std::chrono::duration<double,std::milli>>(end - begin).count();
-    std::cout << "Time for " << testWidth << "x" << testHeight <<" frame is " << duration << " ms" << std::endl;
-
+    std::cout << "begin" << std::endl;
+    FarnebackPolyExpPPstl(srcMat, dstMat);
+    std::cout << "end" << std::endl;
     return 0;
 }
 
