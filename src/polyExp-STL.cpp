@@ -18,18 +18,78 @@ void print_results(high_resolution_clock::time_point startTime, high_resolution_
                                                                      << " ms" << std::endl;
 }
 */
-const size_t testSize = 1000;
-const int n = 5;
+const size_t testWidth = 760;
+const size_t testHeight = 580;
 
 
-static void FarnebackPolyExpPPstl(cv::Mat& src, cv::Mat& dst)
+static void
+FarnebackPrepareGaussian(int n, double sigma, float *g, float *xg, float *xxg,
+                         double &ig11, double &ig03, double &ig33, double &ig55)
 {
-    int width = testSize;
-    int height = testSize;
+    if( sigma < FLT_EPSILON )
+        sigma = n*0.3;
+
+    double s = 0.;
+    for (int x = -n; x <= n; x++)
+    {
+        g[x] = (float)std::exp(-x*x/(2*sigma*sigma));
+        s += g[x];
+    }
+
+    s = 1./s;
+    for (int x = -n; x <= n; x++)
+    {
+        g[x] = (float)(g[x]*s);
+        xg[x] = (float)(x*g[x]);
+        xxg[x] = (float)(x*x*g[x]);
+    }
+
+    cv::Mat_<double> G(6, 6);
+    G.setTo(0);
+
+    for (int y = -n; y <= n; y++)
+    {
+        for (int x = -n; x <= n; x++)
+        {
+            G(0,0) += g[y]*g[x];
+            G(1,1) += g[y]*g[x]*x*x;
+            G(3,3) += g[y]*g[x]*x*x*x*x;
+            G(5,5) += g[y]*g[x]*x*x*y*y;
+        }
+    }
+
+    //G[0][0] = 1.;
+    G(2,2) = G(0,3) = G(0,4) = G(3,0) = G(4,0) = G(1,1);
+    G(4,4) = G(3,3);
+    G(3,4) = G(4,3) = G(5,5);
+
+    // invG:
+    // [ x        e  e    ]
+    // [    y             ]
+    // [       y          ]
+    // [ e        z       ]
+    // [ e           z    ]
+    // [                u ]
+    cv::Mat_<double> invG = G.inv(cv::DECOMP_CHOLESKY);
+
+    ig11 = invG(1,1);
+    ig03 = invG(0,3);
+    ig33 = invG(3,3);
+    ig55 = invG(5,5);
+}
+
+static void FarnebackPolyExpPPstl(cv::Mat& src, cv::Mat& dst, int n, double sigma)
+{
+    int width = testWidth;
+    int height = testHeight;
     std::vector<float> kbuf (n*6 + 3);
-    double ig11 = 0.3, ig03 = 0.2, ig33 = 0.1, ig55 = 0.4;
-    std::fill(kbuf.begin(),kbuf.end(),0.12);
-    dst.create(testSize,testSize,CV_32FC(5));
+    float* g = kbuf.data() + n;
+    float* xg = g + n*2 + 1;
+    float* xxg = xg + n*2 + 1;
+    double ig11, ig03, ig33, ig55;
+    FarnebackPrepareGaussian(n, sigma, g, xg, xxg, ig11, ig03, ig33, ig55);
+
+    //dst.create(testSize,testSize,CV_32FC(5));
     auto src_ptr = src.ptr<float>(0);
     auto dst_ptr = dst.ptr<float>(0);
     std::for_each(std::execution::par_unseq, src_ptr,src_ptr + (width * height),[=](auto &pix){
@@ -78,26 +138,31 @@ static void FarnebackPolyExpPPstl(cv::Mat& src, cv::Mat& dst)
 
 
 int main() {
-    auto src = new cv::Mat(testSize, testSize, CV_32FC1);
-    auto dst = new cv::Mat;
-    //src.create(testSize, testSize, CV_32FC1);
 
+    //auto src = new cv::Mat(testSize, testSize, CV_32FC1);
+    //auto dst = new cv::Mat(testSize, testSize, CV_32FC(5));
+    //src.create(testSize, testSize, CV_32FC1);
+    /*
     for (int i = 0; i < testSize*testSize; ++i) {
         src->at<float>(i) = 5.f;
     }
-
-    //std::vector<float> src (testSize*testSize);
-    /*
-    for(float & i : src){
-        i = 5.f;
-    }
     */
-    //cv::Mat srcMat = cv::Mat(testSize,testSize,CV_32FC1,src.data());
-    //std::vector<float> dst ((testSize*testSize)*5);
-    //cv::Mat dstMat = cv::Mat(testSize,testSize,CV_32FC(5),dst.data());
-    std::cout << "begin" << std::endl;
-    FarnebackPolyExpPPstl(*src, *dst);
-    std::cout << "end" << std::endl;
+    std::vector<float> src (testWidth*testHeight);
+    //original src Mat contains Greyscale values between 0 and 255
+    for(float & i : src){
+        int randNum = rand()%(254-1 + 1) + 1;
+        i = (float)randNum;
+    }
+
+    cv::Mat srcMat = cv::Mat(testHeight,testWidth,CV_32FC1,src.data());
+    std::vector<float> dst ((testWidth*testHeight)*5);
+    cv::Mat dstMat = cv::Mat(testHeight,testWidth,CV_32FC(5),dst.data());
+    auto begin = std::chrono::high_resolution_clock::now();
+    FarnebackPolyExpPPstl(srcMat, dstMat, 5, 1.2);
+    auto end = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::duration<double,std::milli>>(end - begin).count();
+    std::cout << "Time for " << testWidth << "x" << testHeight <<" frame is " << duration << " ms" << std::endl;
+
     return 0;
 }
 

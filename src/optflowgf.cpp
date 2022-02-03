@@ -44,6 +44,7 @@
 #include <execution>
 #include <iostream>
 #include <numeric>
+#include <chrono>
 
 //
 // 2D dense optical flow algorithm from the following paper:
@@ -1436,15 +1437,19 @@ private:
                 }
 
                 Mat R[2], I, M;
+                std::chrono::time_point<std::chrono::steady_clock> start , end;
                 for( i = 0; i < 2; i++ )
                 {
                     img[i]->convertTo(fimg, CV_32F);
                     GaussianBlur(fimg, fimg, Size(smooth_sz, smooth_sz), sigma, sigma);
                     //resize frame to match pyramidWindow and store in I
                     resize( fimg, I, Size(width, height), INTER_LINEAR );
-                    FarnebackPolyExpPPstl( I, R[i], polyN_, polySigma_ );
+                    start = std::chrono::high_resolution_clock::now();
+                    FarnebackPolyExpPP( I, R[i], polyN_, polySigma_ );
+                    end = std::chrono::high_resolution_clock::now();
                 }
-
+                auto duration = std::chrono::duration_cast<std::chrono::duration<double,std::milli>>(end - start).count();
+                if (k == 0) std::cout << "Time for " << width << "x" << height <<" frame is " << duration << " ms" << std::endl;
                 FarnebackUpdateMatrices( R[0], R[1], flow, M, 0, flow.rows );
 
                 for( i = 0; i < numIters_; i++ )
