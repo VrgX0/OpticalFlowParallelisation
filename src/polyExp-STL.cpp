@@ -3,7 +3,6 @@
 #include <chrono>
 #include <algorithm>
 #include <execution>
-#include <vector>
 #include <opencv2/opencv.hpp>
 
 using std::chrono::duration;
@@ -24,16 +23,16 @@ const size_t testHeight = 580;
 int n = 5;
 
 
-static void FarnebackPolyExpPPstl(cv::Mat& src, cv::Mat& dst)
+static void FarnebackPolyExpPPstl(const std::vector<float>& src, std::vector<float>& dst)
 {
     int width = testWidth;
     int height = testHeight;
-    std::vector<float> kbuf (n*6 + 3);
+    std::vector<float> kbuf (n*6 + 3, 0.23);
     double ig11 = 0.12, ig03 = 0.14, ig33 = 0.13, ig55 = 1.23;
 
     //dst.create(testSize,testSize,CV_32FC(5));
-    auto src_ptr = src.ptr<float>(0);
-    auto dst_ptr = dst.ptr<float>(0);
+    auto src_ptr = src.data();
+    auto dst_ptr = dst.data();
     std::for_each(std::execution::par_unseq, src_ptr,src_ptr + (width * height),[=](auto &pix){
         int xgOff = n + n*2 +1;
         int xxgOff = xgOff +n*2;
@@ -84,11 +83,11 @@ int main() {
     for(float & i : src){
         i = 5.f;
     }
-    cv::Mat srcMat = cv::Mat(testHeight,testWidth,CV_32FC1,src.data());
+    //cv::Mat srcMat = cv::Mat(testHeight,testWidth,CV_32FC1,src.data());
     std::vector<float> dst ((testHeight*testWidth)*5);
-    cv::Mat dstMat = cv::Mat(testHeight,testWidth,CV_32FC(5),dst.data());
+    //cv::Mat dstMat = cv::Mat(testHeight,testWidth,CV_32FC(5),dst.data());
     std::cout << "begin" << std::endl;
-    FarnebackPolyExpPPstl(srcMat, dstMat);
+    FarnebackPolyExpPPstl(src, dst);
     std::cout << "end" << std::endl;
     return 0;
 }

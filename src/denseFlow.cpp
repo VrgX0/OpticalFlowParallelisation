@@ -31,7 +31,7 @@ int main()
     capture >> frame1;
     //convert into Grayscale picture
     cvtColor(frame1, prvs, COLOR_BGR2GRAY);
-    auto startLoop = chrono::high_resolution_clock::now();
+    //auto startLoop = chrono::high_resolution_clock::now();
     while(true){
         //initialize second frame
         Mat frame2, next;
@@ -42,9 +42,9 @@ int main()
         //convert into Grayscale picture
         cvtColor(frame2, next, COLOR_BGR2GRAY);
         Mat flow(prvs.size(), CV_32FC2);
-        auto start = chrono::high_resolution_clock::now();
+        auto start = chrono::steady_clock::now();
         calcOpticalFlowFarneback(prvs, next, flow, 0.5, 3, 15, 3, 5, 1.2, 0);
-        auto end = chrono::high_resolution_clock::now();
+        auto end = chrono::steady_clock::now();
         // visualization
         Mat flow_parts[2];
         //split flow into multiple
@@ -68,9 +68,9 @@ int main()
         if (keyboard == 'q' || keyboard == 27)
             break;
         prvs = next;
-        cout << chrono::duration_cast<chrono::duration<double, milli>>(end - start).count() << endl;
+        cout << "Overall Time to calculate: "<< chrono::duration_cast<chrono::duration<double, milli>>(end - start).count() << " ms" << endl;
     }
-    auto endLoop = chrono::high_resolution_clock::now();
+    //auto endLoop = chrono::high_resolution_clock::now();
     //cout << chrono::duration_cast<chrono::duration<double, milli>>(endLoop - startLoop).count() << endl;
 }
 

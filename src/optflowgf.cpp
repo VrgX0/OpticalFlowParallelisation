@@ -365,14 +365,14 @@ namespace cv
             float g0 = g[0], g1, g2;
             const float *srow0 = src.ptr<float>(y), *srow1 = 0;
             auto *drow = dst.ptr<float>(y);
-            auto begin1 = std::chrono::high_resolution_clock::now();
+            auto begin1 = std::chrono::steady_clock::now();
             std::transform(mainExPo, srow0, srow0 + width, rowBuf.begin() + n,
                            [g0](float n){return n*g0;});
 
             std::fill(mainExPo, xRowBuf.begin(), xRowBuf.end(), 0.f);
             std::fill(mainExPo, xxRowBuf.begin(), xxRowBuf.end(), 0.f);
-            auto end1 = std::chrono::high_resolution_clock::now();
-            auto begin2 = std::chrono::high_resolution_clock::now();
+            auto end1 = std::chrono::steady_clock::now();
+            auto begin2 = std::chrono::steady_clock::now();
 
             for( k = 1; k <= n; k++ ) //k equals to Poly_n
             {
@@ -400,8 +400,8 @@ namespace cv
                 std::transform(mainExPo, pArray.begin(), pArray.end(), xxRowBuf.begin() +n ,xxRowBuf.begin() +n,
                                [g2](float n, float m){return m + g2 * n;});
             }
-            auto end2 = std::chrono::high_resolution_clock::now();
-            auto begin3 = std::chrono::high_resolution_clock::now();
+            auto end2 = std::chrono::steady_clock::now();
+            auto begin3 = std::chrono::steady_clock::now();
             for( x = 0; x < n; x++ )
             {
                 rowBuf[-1 - x + n] = rowBuf[n];
@@ -411,8 +411,8 @@ namespace cv
                 xRowBuf[width + n+ x] = xRowBuf[width+n-1];
                 xxRowBuf[width + n + x] = xxRowBuf[width+n-1];
             }
-            auto end3 = std::chrono::high_resolution_clock::now();
-            auto begin4 = std::chrono::high_resolution_clock::now();
+            auto end3 = std::chrono::steady_clock::now();
+            auto begin4 = std::chrono::steady_clock::now();
             std::vector<int> test (width);
             std::iota(test.begin(), test.end(),0);
 
@@ -571,7 +571,7 @@ FarnebackPolyExpPyr( const Mat& src0, Vector<Mat>& pyr, int maxlevel, int n, dou
     static void
     FarnebackUpdateFlow_Blur( const Mat& _R0, const Mat& _R1,
                               Mat& _flow, Mat& matM, int block_size,
-                              bool update_matrices )
+                              bool update_matrices, double& dur)
     {
         int x, y, width = _flow.cols, height = _flow.rows;
         int m = block_size/2;
@@ -654,8 +654,13 @@ FarnebackPolyExpPyr( const Mat& src0, Vector<Mat>& pyr, int maxlevel, int n, dou
             y1 = y == height - 1 ? height : y - block_size;
             if( update_matrices && (y1 == height || y1 >= y0 + min_update_stripe) )
             {
+                auto start = std::chrono::steady_clock::now();
                 FarnebackUpdateMatrices( _R0, _R1, _flow, matM, y0, y1 );
+                auto end = std::chrono::steady_clock::now();
+                dur = std::chrono::duration_cast<std::chrono::duration<double,std::milli>>(end - start).count();
                 y0 = y1;
+            } else {
+                dur = 0;
             }
         }
     }
@@ -1401,6 +1406,8 @@ private:
             // and record how many level the created pyramid has
             levels = k;
             // for each level on the pyramid starting with the smallest level
+            double durationPoly = 0, durationUpdate = 0,durationUpdate2 = 0, durationBlur = 0;
+            int countPoly = 0, countUpdate = 0, countBlur = 0;
             for( k = levels; k >= 0; k-- )
             {
                 //calculate pyramidScale according to current level
@@ -1444,32 +1451,49 @@ private:
                     GaussianBlur(fimg, fimg, Size(smooth_sz, smooth_sz), sigma, sigma);
                     //resize frame to match pyramidWindow and store in I
                     resize( fimg, I, Size(width, height), INTER_LINEAR );
-                    start = std::chrono::high_resolution_clock::now();
-                    FarnebackPolyExpPP( I, R[i], polyN_, polySigma_ );
-                    end = std::chrono::high_resolution_clock::now();
-                }
-                auto duration = std::chrono::duration_cast<std::chrono::duration<double,std::milli>>(end - start).count();
-                if (k == 0) std::cout << "Time for " << width << "x" << height <<" frame is " << duration << " ms" << std::endl;
-                FarnebackUpdateMatrices( R[0], R[1], flow, M, 0, flow.rows );
+                    start = std::chrono::steady_clock::now();
+                    FarnebackPolyExp( I, R[i], polyN_, polySigma_ );
+                    end = std::chrono::steady_clock::now();
+                    durationPoly += std::chrono::duration_cast<std::chrono::duration<double,std::milli>>(end - start).count();
+                    countPoly++;
 
+                    //std::cout << "Time for " << width << "x" << height <<" frame is " << duration << " ms" << std::endl;
+                }
+                start = std::chrono::steady_clock::now();
+                FarnebackUpdateMatrices( R[0], R[1], flow, M, 0, flow.rows );
+                end = std::chrono::steady_clock::now();
+                durationUpdate += std::chrono::duration_cast<std::chrono::duration<double,std::milli>>(end - start).count();
+                countUpdate++;
+
+                //std::cout << "Time for " << width << "x" << height <<" frame is " << duration << " ms" << std::endl;
                 for( i = 0; i < numIters_; i++ )
                 {
-                    if( flags_ & OPTFLOW_FARNEBACK_GAUSSIAN)
-                        FarnebackUpdateFlow_GaussianBlur( R[0], R[1], flow, M, winSize_, i < numIters_ - 1 );
-                    else
-                        FarnebackUpdateFlow_Blur( R[0], R[1], flow, M, winSize_, i < numIters_ - 1 );
+                    if( flags_ & OPTFLOW_FARNEBACK_GAUSSIAN) {
+                        FarnebackUpdateFlow_GaussianBlur(R[0], R[1], flow, M, winSize_, i < numIters_ - 1);
+                    }else {
+                        start = std::chrono::steady_clock::now();
+                        FarnebackUpdateFlow_Blur(R[0], R[1], flow, M, winSize_, i < numIters_ - 1, durationUpdate2);
+                        end = std::chrono::steady_clock::now();
+                        durationBlur += std::chrono::duration_cast<std::chrono::duration<double,std::milli>>(end - start).count();
+                        countBlur++;
+                        durationUpdate += durationUpdate2;
+                        durationBlur -= durationUpdate2;
+                    }
                 }
 
                 prevFlow = flow;
-
             }
+            std::cout << "---- Timing: ----\n FarnebackPolyExp: " << durationPoly << " ms\n FarnebackUpdateMatrices: "
+                        << durationUpdate << " ms\n FarnebackFlowBlur: " << durationBlur << " ms" << std::endl;
+            //std::cout << "---- Counts: ----\n FarnebackPolyExp: " << countPoly << " \n FarnebackUpdateMatrices: "
+            //          << countUpdate << "\n FarnebackFlowBlur: " << countBlur << std::endl;
         }
     } // namespace
 } // namespace cv
 
 void calcOpticalFlowFarneback( cv::InputArray _prev0, cv::InputArray _next0,
                                    cv::InputOutputArray _flow0, double pyr_scale, int levels, int winsize,
-                                   int iterations, int poly_n, double poly_sigma, int flags )
+                                   int iterations, int poly_n, double poly_sigma, int flags)
 {
     //CV_INSTRUMENT_REGION();
 
