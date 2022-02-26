@@ -3,23 +3,9 @@
 #include <chrono>
 #include <algorithm>
 #include <execution>
-#include <opencv2/opencv.hpp>
 
-using std::chrono::duration;
-using std::chrono::high_resolution_clock;
-using std::chrono::duration_cast;
-/*
-double getDuration (high_resolution_clock::time_point start, high_resolution_clock::time_point end){
-    return duration_cast<duration<double, std::milli>>(end - start).count();
-}
-
-void print_results(high_resolution_clock::time_point startTime, high_resolution_clock::time_point endTime){
-    std::cout << "Time " << duration_cast<duration<double, std::milli>>(endTime - startTime).count()
-                                                                     << " ms" << std::endl;
-}
-*/
-const size_t testWidth = 760;
-const size_t testHeight = 580;
+const size_t testWidth = 10;
+const size_t testHeight = 10;
 int n = 5;
 
 
@@ -30,7 +16,6 @@ static void FarnebackPolyExpPPstl(const std::vector<float>& src, std::vector<flo
     std::vector<float> kbuf (n*6 + 3, 0.23);
     double ig11 = 0.12, ig03 = 0.14, ig33 = 0.13, ig55 = 1.23;
 
-    //dst.create(testSize,testSize,CV_32FC(5));
     auto src_ptr = src.data();
     auto dst_ptr = dst.data();
     std::for_each(std::execution::par_unseq, src_ptr,src_ptr + (width * height),[=](auto &pix){
@@ -57,6 +42,7 @@ static void FarnebackPolyExpPPstl(const std::vector<float>& src, std::vector<flo
             }
         }
 
+
         double b1 = rBuf[n]*g0, b2 = 0, b3 = rBuf[n + offset]*g0, b4 = 0, b5 = rBuf[n + 2*offset]*g0, b6 = 0;
         for( int a = 1; a <= n; a++){
 
@@ -74,6 +60,7 @@ static void FarnebackPolyExpPPstl(const std::vector<float>& src, std::vector<flo
         dst_ptr[pixel*5+3] = (float)(b1*ig03 + b4*ig33);
         dst_ptr[pixel*5+2] = (float)(b1*ig03 + b5*ig33);
         dst_ptr[pixel*5+4] = (float)(b6*ig55);
+
     });
 }
 
@@ -83,9 +70,7 @@ int main() {
     for(float & i : src){
         i = 5.f;
     }
-    //cv::Mat srcMat = cv::Mat(testHeight,testWidth,CV_32FC1,src.data());
     std::vector<float> dst ((testHeight*testWidth)*5);
-    //cv::Mat dstMat = cv::Mat(testHeight,testWidth,CV_32FC(5),dst.data());
     std::cout << "begin" << std::endl;
     FarnebackPolyExpPPstl(src, dst);
     std::cout << "end" << std::endl;
