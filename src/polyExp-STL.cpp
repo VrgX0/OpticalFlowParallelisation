@@ -4,9 +4,9 @@
 #include <algorithm>
 #include <execution>
 
-const size_t testWidth = 100;
-const size_t testHeight = 100;
-int n = 5;
+const size_t testWidth = 768;
+const size_t testHeight = 576;
+const int n = 5;
 
 
 static void FarnebackPolyExpPPstl(const std::vector<float>& src, std::vector<float>& dst)
@@ -64,7 +64,7 @@ static void FarnebackPolyExpPPstl(const std::vector<float>& src, std::vector<flo
     });
 }
 
-static void FarnebackPolyExpPPstl2(const std::vector<float>& src, std::vector<std::vector<float>>& dst)
+static void FarnebackPolyExpPPstl2(const std::vector<float>& src, std::vector<float>& dst)
 {
     int width = testWidth;
     int height = testHeight;
@@ -72,8 +72,8 @@ static void FarnebackPolyExpPPstl2(const std::vector<float>& src, std::vector<st
     double ig11 = 0.12, ig03 = 0.14, ig33 = 0.13, ig55 = 1.23;
 
     auto src_ptr = &src[0];
-    //auto dst_ptr = dst.data();
-    std::transform(std::execution::par_unseq, src.begin(), src.end(),dst.begin(),[=](auto &pix){
+    auto dst_ptr = dst.data();
+    std::for_each(std::execution::par_unseq, src.begin(), src.end(),[=](auto &pix){
         int xgOff = n + n*2 +1;
         int xxgOff = xgOff + n*2 +1;
         float g0 = kbuf[0+n];
@@ -123,12 +123,15 @@ static void FarnebackPolyExpPPstl2(const std::vector<float>& src, std::vector<st
                 b6 -= xrBuf * xg;
             }
         }
-
-        return std::vector<float> {(float)(b3*ig11), (float)(b2*ig11),
-                                   (float)(b1*ig03 + b5*ig33),
-                                   (float)(b1*ig03 + b4*ig33), (float)(b6*ig55) };
+        int pixel = x+y*width;
+        dst_ptr[pixel*5+1] = (float)(b2*ig11);
+        dst_ptr[pixel*5] = (float)(b3*ig11);
+        dst_ptr[pixel*5+3] = (float)(b1*ig03 + b4*ig33);
+        dst_ptr[pixel*5+2] = (float)(b1*ig03 + b5*ig33);
+        dst_ptr[pixel*5+4] = (float)(b6*ig55);
     });
 }
+
 
 int main() {
     std::vector<float> src (testHeight * testWidth);
@@ -136,11 +139,15 @@ int main() {
         i = 5.f;
     }
     std::vector<float> dst ((testHeight*testWidth)*5);
-    std::vector<std::vector<float>> Vdst (testWidth*testHeight);
-    std::transform(std::execution::par_unseq, src.begin(), src.end(), src.begin(), [](auto a){return a*2;});
+
     std::cout << "begin" << std::endl;
-    FarnebackPolyExpPPstl2(src, Vdst);
-    std::cout << "end" << std::endl;
+
+    auto start = std::chrono::steady_clock::now();
+    FarnebackPolyExpPPstl(src, dst);
+    auto end = std::chrono::steady_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::duration<double,std::milli>>(end - start).count();
+
+    std::cout << "end \n duration: " << duration << std::endl;
     return 0;
 }
 
