@@ -3,9 +3,11 @@
 #include <chrono>
 #include <algorithm>
 #include <execution>
+#include <fstream>
 
 const size_t testWidth = 768;
 const size_t testHeight = 576;
+const size_t sampleSize = 300;
 const int n = 5;
 
 
@@ -134,20 +136,28 @@ static void FarnebackPolyExpPPstl2(const std::vector<float>& src, std::vector<fl
 
 
 int main() {
-    std::vector<float> src (testHeight * testWidth);
-    for(float & i : src){
-        i = 5.f;
+    srand(43156844);
+    std::ofstream myFile;
+    myFile.open ("example.txt");
+    myFile << "Timings\n";
+    myFile.close();
+    std::cout << "calculating polynomial coefficients for " << sampleSize << " Frames..." << std::endl;
+    for (int z = 0; z < sampleSize ; ++z) {
+        std::vector<float> src (testHeight * testWidth);
+        for(float & i : src){
+            i = float(rand() % 255 + 30);
+        }
+        std::vector<float> dst ((testHeight*testWidth)*5);
+        auto start = std::chrono::steady_clock::now();
+        FarnebackPolyExpPPstl2(src, dst);
+        auto end = std::chrono::steady_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::duration<double,std::milli>>(end - start).count();
+
+        myFile.open ("example.txt",  std::ios_base::app);
+        myFile << duration <<"\n";
+        myFile.close();
     }
-    std::vector<float> dst ((testHeight*testWidth)*5);
 
-    std::cout << "begin" << std::endl;
-
-    auto start = std::chrono::steady_clock::now();
-    FarnebackPolyExpPPstl(src, dst);
-    auto end = std::chrono::steady_clock::now();
-    auto duration = std::chrono::duration_cast<std::chrono::duration<double,std::milli>>(end - start).count();
-
-    std::cout << "end \n duration: " << duration << std::endl;
     return 0;
 }
 
