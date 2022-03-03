@@ -324,6 +324,90 @@ namespace cv
     }
 
     static void
+    FarnebackPolyExpPPstl2( const Mat& src, Mat& dst, int n, double sigma )
+    {
+        CV_Assert( src.type() == CV_32FC1 );
+        int width = src.cols;
+        int height = src.rows;
+        std::vector<float> kbuf(n*6 + 3);
+        float* _g = kbuf.data() + n;
+        float* _xg = _g + n * 2 + 1;
+        float* _xxg = _xg + n * 2 + 1;
+        double ig11, ig03, ig33, ig55;
+
+
+        FarnebackPrepareGaussian(n, sigma, _g, _xg, _xxg, ig11, ig03, ig33, ig55);
+
+        dst.create( height, width, CV_32FC(5));
+        auto _src = src.ptr<float>(0);
+        auto src_ptr = src.ptr<float>(0);
+        auto _dst = dst.ptr<float>(0);
+
+        std::for_each(std::execution::seq, _src,_src + (width * height),[=](auto &pix){
+            int xgOff = n + n*2 +1;
+            int xxgOff = xgOff + n*2 +1;
+            float g0 = kbuf[0+n];
+            float rBuf = 0.f;
+            float xrBuf = 0.f;
+            float xxrBuf = 0.f;
+
+            double b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
+
+            auto index = &pix - src_ptr;
+            int x = index % width;
+            int y = index / width;
+
+            for( int a = 0; a < 2*n+1; a++){
+                int neighX = std::max(x + a-n, 0);
+                neighX = std::min(neighX, width-1);
+                rBuf = src_ptr[neighX + y * width] * g0;
+                xrBuf = 0.f;
+                xxrBuf = 0.f;
+                for(int b = 1; b <= n; b++) {
+                    int neighY0 = std::max((y - b) * width, 0);
+                    int neighY1 = std::min((y + b) * width, (height - 1) * width);
+                    rBuf += (src_ptr[neighX + neighY0] + src_ptr[neighX + neighY1]) * kbuf[b+n];
+                    xrBuf += (src_ptr[neighX + neighY1] - src_ptr[neighX + neighY0]) * kbuf[b+xgOff];
+                    xxrBuf += (src_ptr[neighX + neighY0] + src_ptr[neighX + neighY1]) * kbuf[b+xxgOff];
+                }
+                float g = kbuf[abs(a-n) + n];
+                float xg = kbuf[abs(a-n) + xgOff];
+                float xxg = kbuf[abs(a-n) + xxgOff];
+                if(a == n){
+                    b1 += rBuf * g;
+                    b3 += xrBuf * g;
+                    b5 += xxrBuf * g;
+                } else if(a > n){
+                    b1 += rBuf * g;
+                    b2 += rBuf * xg;
+                    b3 += xrBuf * g;
+                    b4 += rBuf * xxg;
+                    b5 += xxrBuf * g;
+                    b6 += xrBuf * xg;
+                } else if(a < n){
+                    b1 += rBuf * g;
+                    b2 -= rBuf * xg;
+                    b3 += xrBuf * g;
+                    b4 += rBuf * xxg;
+                    b5 += xxrBuf * g;
+                    b6 -= xrBuf * xg;
+                }
+            }
+            //std::cout << b4 << " " ;
+            //if(x == width-1)std::cout << std::endl;
+
+            int pixel = x+y*width;
+            _dst[pixel*5+1] = (float)(b2*ig11);
+            _dst[pixel*5] = (float)(b3*ig11);
+            _dst[pixel*5+3] = (float)(b1*ig03 + b4*ig33);
+            _dst[pixel*5+2] = (float)(b1*ig03 + b5*ig33);
+            _dst[pixel*5+4] = (float)(b6*ig55);
+            //std::cout << "[" << _dst[pixel*5] << " " << _dst[pixel*5+1] << " "<< _dst[pixel*5+2] << " " << _dst[pixel*5+3] << " " << _dst[pixel*5+4] << "]";
+            //if(x == width-1)std::cout << std::endl;
+        });
+    }
+
+    static void
     FarnebackPolyExpPar( const Mat& src, Mat& dst, int n, double sigma ) {
         int k, x, y;
 
