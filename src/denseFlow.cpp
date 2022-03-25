@@ -10,15 +10,14 @@ using namespace std;
 namespace fs = std::filesystem;
 
 #if defined(_WIN32)
-#define VIDEO "../Sample/vtest_000/vtest_%03d.png"
+#define VIDEO "../sample/vtest_000/vtest_%03d.png"
 #else
-#define VIDEO "Sample/vtest_000/vtest_%03d.png"
+#define VIDEO "sample/vtest_000/vtest_%03d.png"
 #endif
 
 int main()
 {
     cout << "start optflow" << endl;
-    //VideoCapture capture(R"(D:\MPI-Sintel-complete\training\clean\bamboo_1\frame_%04d.png)");
     VideoCapture capture((fs::current_path() / VIDEO).generic_string());
 
     if (!capture.isOpened()){
@@ -42,9 +41,9 @@ int main()
         //convert into Grayscale picture
         cvtColor(frame2, next, COLOR_BGR2GRAY);
         Mat flow(prvs.size(), CV_32FC2);
-        auto start = chrono::steady_clock::now();
+        //auto start = chrono::steady_clock::now();
         calcOpticalFlowFarneback(prvs, next, flow, 0.5, 3, 15, 3, 5, 1.2, 0);
-        auto end = chrono::steady_clock::now();
+        //auto end = chrono::steady_clock::now();
         // visualization
         Mat flow_parts[2];
         //split flow into multiple
@@ -68,7 +67,7 @@ int main()
         if (keyboard == 'q' || keyboard == 27)
             break;
         prvs = next;
-        cout << "Overall Time to calculate: "<< chrono::duration_cast<chrono::duration<double, milli>>(end - start).count() << " ms" << endl;
+        //cout << "Overall Time to calculate: "<< chrono::duration_cast<chrono::duration<double, milli>>(end - start).count() << " ms" << endl;
     }
     //auto endLoop = chrono::high_resolution_clock::now();
     //cout << chrono::duration_cast<chrono::duration<double, milli>>(endLoop - startLoop).count() << endl;

@@ -189,10 +189,7 @@ namespace cv
                 drow[x*5+3] = (float)(b1*ig03 + b4*ig33);
                 drow[x*5+2] = (float)(b1*ig03 + b5*ig33);
                 drow[x*5+4] = (float)(b6*ig55);
-
-                //std::cout << "[" << drow[x*5] << " " << drow[x*5+1] << " "<< drow[x*5+2] << " " << drow[x*5+3] << " " << drow[x*5+4] << "]";
             }
-            //std::cout << std::endl;
         }
         row -= n*3;
     }
@@ -223,13 +220,12 @@ namespace cv
                 float g0 = g[0];
                 std::vector<float> rBuf((2 * n + 1)*3, 0.f);
                 int offset = 2*n+1;
-                //std::vector<float> xrBuf(2 * n + 1, 0.f);
-                //std::vector<float> xxrBuf(2 * n + 1,0.f);
 
                 for( int a = 0; a < 2*n+1; a++){
                     int neighX = std::max(x + a-n, 0);
                     neighX = std::min(neighX, width-1);
                     rBuf[a] = _src[neighX + y * width] * g0;
+
                     for(int b = 1; b <= n; b++){
                         int neighY0 = std::max((y-b)*width, 0);
                         int neighY1 = std::min((y+b)*width, (height-1)*width);
@@ -254,9 +250,8 @@ namespace cv
                 _dst[pixel*5+3] = (float)(b1*ig03 + b4*ig33);
                 _dst[pixel*5+2] = (float)(b1*ig03 + b5*ig33);
                 _dst[pixel*5+4] = (float)(b6*ig55);
-                //std::cout << "[" << _dst[pixel*5] << " " << _dst[pixel*5+1] << " "<< _dst[pixel*5+2] << " " << _dst[pixel*5+3] << " " << _dst[pixel*5+4] << "]";
+
             }
-            //std::cout << std::endl;
         }
     }
 
@@ -295,6 +290,7 @@ namespace cv
                 int neighX = std::max(x + a-n, 0);
                 neighX = std::min(neighX, width-1);
                 rBuf[a] = _src[neighX + y * width] * g0;
+
                 for(int b = 1; b <= n; b++) {
                     int neighY0 = std::max((y - b) * width, 0);
                     int neighY1 = std::min((y + b) * width, (height - 1) * width);
@@ -363,6 +359,7 @@ namespace cv
                 rBuf = src_ptr[neighX + y * width] * g0;
                 xrBuf = 0.f;
                 xxrBuf = 0.f;
+
                 for(int b = 1; b <= n; b++) {
                     int neighY0 = std::max((y - b) * width, 0);
                     int neighY1 = std::min((y + b) * width, (height - 1) * width);
@@ -370,6 +367,7 @@ namespace cv
                     xrBuf += (src_ptr[neighX + neighY1] - src_ptr[neighX + neighY0]) * kbuf[b+xgOff];
                     xxrBuf += (src_ptr[neighX + neighY0] + src_ptr[neighX + neighY1]) * kbuf[b+xxgOff];
                 }
+
                 float g = kbuf[abs(a-n) + n];
                 float xg = kbuf[abs(a-n) + xgOff];
                 float xxg = kbuf[abs(a-n) + xxgOff];
@@ -393,8 +391,6 @@ namespace cv
                     b6 -= xrBuf * xg;
                 }
             }
-            //std::cout << b4 << " " ;
-            //if(x == width-1)std::cout << std::endl;
 
             int pixel = x+y*width;
             _dst[pixel*5+1] = (float)(b2*ig11);
@@ -402,8 +398,6 @@ namespace cv
             _dst[pixel*5+3] = (float)(b1*ig03 + b4*ig33);
             _dst[pixel*5+2] = (float)(b1*ig03 + b5*ig33);
             _dst[pixel*5+4] = (float)(b6*ig55);
-            //std::cout << "[" << _dst[pixel*5] << " " << _dst[pixel*5+1] << " "<< _dst[pixel*5+2] << " " << _dst[pixel*5+3] << " " << _dst[pixel*5+4] << "]";
-            //if(x == width-1)std::cout << std::endl;
         });
     }
 
@@ -1535,40 +1529,43 @@ private:
                     GaussianBlur(fimg, fimg, Size(smooth_sz, smooth_sz), sigma, sigma);
                     //resize frame to match pyramidWindow and store in I
                     resize( fimg, I, Size(width, height), INTER_LINEAR );
-                    start = std::chrono::steady_clock::now();
-                    FarnebackPolyExp( I, R[i], polyN_, polySigma_ );
-                    end = std::chrono::steady_clock::now();
-                    durationPoly += std::chrono::duration_cast<std::chrono::duration<double,std::milli>>(end - start).count();
-                    countPoly++;
-
-                    //std::cout << "Time for " << width << "x" << height <<" frame is " << duration << " ms" << std::endl;
+                    //start = std::chrono::steady_clock::now();
+                    FarnebackPolyExpPPstl( I, R[i], polyN_, polySigma_ );
+                    //end = std::chrono::steady_clock::now();
+                    /*
+                    if (width >= 768 && height >= 576){
+                        durationPoly = std::chrono::duration_cast<std::chrono::duration<double,std::milli>>(end - start).count();
+                        countPoly++;
+                    }
+                    */
                 }
-                start = std::chrono::steady_clock::now();
+                //start = std::chrono::steady_clock::now();
                 FarnebackUpdateMatrices( R[0], R[1], flow, M, 0, flow.rows );
-                end = std::chrono::steady_clock::now();
+                //end = std::chrono::steady_clock::now();
+                /*
                 durationUpdate += std::chrono::duration_cast<std::chrono::duration<double,std::milli>>(end - start).count();
                 countUpdate++;
-
-                //std::cout << "Time for " << width << "x" << height <<" frame is " << duration << " ms" << std::endl;
+                */
                 for( i = 0; i < numIters_; i++ )
                 {
                     if( flags_ & OPTFLOW_FARNEBACK_GAUSSIAN) {
                         FarnebackUpdateFlow_GaussianBlur(R[0], R[1], flow, M, winSize_, i < numIters_ - 1);
                     }else {
-                        start = std::chrono::steady_clock::now();
+                        //start = std::chrono::steady_clock::now();
                         FarnebackUpdateFlow_Blur(R[0], R[1], flow, M, winSize_, i < numIters_ - 1, durationUpdate2);
-                        end = std::chrono::steady_clock::now();
+                        //end = std::chrono::steady_clock::now();
+                        /*
                         durationBlur += std::chrono::duration_cast<std::chrono::duration<double,std::milli>>(end - start).count();
                         countBlur++;
                         durationUpdate += durationUpdate2;
                         durationBlur -= durationUpdate2;
+                        */
                     }
                 }
 
                 prevFlow = flow;
             }
-            std::cout << "---- Timing: ----\n FarnebackPolyExp: " << durationPoly << " ms\n FarnebackUpdateMatrices: "
-                        << durationUpdate << " ms\n FarnebackFlowBlur: " << durationBlur << " ms" << std::endl;
+            //std::cout << durationPoly << std::endl;
             //std::cout << "---- Counts: ----\n FarnebackPolyExp: " << countPoly << " \n FarnebackUpdateMatrices: "
             //          << countUpdate << "\n FarnebackFlowBlur: " << countBlur << std::endl;
         }
