@@ -1,0 +1,1495 @@
+---- Timing: ----
+ FarnebackPolyExp: 33.2816 ms
+ FarnebackUpdateMatrices: 13.6581 ms
+ FarnebackFlowBlur: 36.3699 ms
+Overall Time to calculate: 96.253 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.0952 ms
+ FarnebackUpdateMatrices: 13.0716 ms
+ FarnebackFlowBlur: 31.4621 ms
+Overall Time to calculate: 89.7562 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.7693 ms
+ FarnebackUpdateMatrices: 13.6097 ms
+ FarnebackFlowBlur: 33.6966 ms
+Overall Time to calculate: 96.5025 ms
+---- Timing: ----
+ FarnebackPolyExp: 38.5491 ms
+ FarnebackUpdateMatrices: 16.06 ms
+ FarnebackFlowBlur: 36.7207 ms
+Overall Time to calculate: 105.634 ms
+---- Timing: ----
+ FarnebackPolyExp: 36.3311 ms
+ FarnebackUpdateMatrices: 13.7105 ms
+ FarnebackFlowBlur: 34.5359 ms
+Overall Time to calculate: 100.717 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.7973 ms
+ FarnebackUpdateMatrices: 12.6826 ms
+ FarnebackFlowBlur: 32.8522 ms
+Overall Time to calculate: 91.5738 ms
+---- Timing: ----
+ FarnebackPolyExp: 44.2482 ms
+ FarnebackUpdateMatrices: 13.9031 ms
+ FarnebackFlowBlur: 31.0884 ms
+Overall Time to calculate: 100.942 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.5066 ms
+ FarnebackUpdateMatrices: 12.7808 ms
+ FarnebackFlowBlur: 32.4952 ms
+Overall Time to calculate: 92.0615 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.0897 ms
+ FarnebackUpdateMatrices: 12.8791 ms
+ FarnebackFlowBlur: 32.1594 ms
+Overall Time to calculate: 88.798 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.4244 ms
+ FarnebackUpdateMatrices: 12.8827 ms
+ FarnebackFlowBlur: 31.1863 ms
+Overall Time to calculate: 90.55 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.253 ms
+ FarnebackUpdateMatrices: 12.7199 ms
+ FarnebackFlowBlur: 33.2964 ms
+Overall Time to calculate: 90.4642 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.1917 ms
+ FarnebackUpdateMatrices: 12.605 ms
+ FarnebackFlowBlur: 31.0297 ms
+Overall Time to calculate: 87.0522 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.8924 ms
+ FarnebackUpdateMatrices: 12.7891 ms
+ FarnebackFlowBlur: 32.3485 ms
+Overall Time to calculate: 90.6599 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.2902 ms
+ FarnebackUpdateMatrices: 13.1338 ms
+ FarnebackFlowBlur: 30.8906 ms
+Overall Time to calculate: 88.2703 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.6883 ms
+ FarnebackUpdateMatrices: 13.0294 ms
+ FarnebackFlowBlur: 32.7227 ms
+Overall Time to calculate: 91.8119 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.4225 ms
+ FarnebackUpdateMatrices: 13.3205 ms
+ FarnebackFlowBlur: 32.9148 ms
+Overall Time to calculate: 90.6189 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.0609 ms
+ FarnebackUpdateMatrices: 13.0871 ms
+ FarnebackFlowBlur: 30.9815 ms
+Overall Time to calculate: 90.1532 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.7684 ms
+ FarnebackUpdateMatrices: 13.0397 ms
+ FarnebackFlowBlur: 32.2284 ms
+Overall Time to calculate: 89.3568 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.2315 ms
+ FarnebackUpdateMatrices: 12.7554 ms
+ FarnebackFlowBlur: 31.5373 ms
+Overall Time to calculate: 87.7763 ms
+---- Timing: ----
+ FarnebackPolyExp: 36.688 ms
+ FarnebackUpdateMatrices: 14.3209 ms
+ FarnebackFlowBlur: 36.0462 ms
+Overall Time to calculate: 102.526 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.8713 ms
+ FarnebackUpdateMatrices: 13.3484 ms
+ FarnebackFlowBlur: 32.9757 ms
+Overall Time to calculate: 91.4421 ms
+---- Timing: ----
+ FarnebackPolyExp: 43.8334 ms
+ FarnebackUpdateMatrices: 16.5754 ms
+ FarnebackFlowBlur: 43.0678 ms
+Overall Time to calculate: 122.239 ms
+---- Timing: ----
+ FarnebackPolyExp: 37.1736 ms
+ FarnebackUpdateMatrices: 14.8675 ms
+ FarnebackFlowBlur: 33.2221 ms
+Overall Time to calculate: 100.689 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.9401 ms
+ FarnebackUpdateMatrices: 13.2038 ms
+ FarnebackFlowBlur: 31.1723 ms
+Overall Time to calculate: 89.2793 ms
+---- Timing: ----
+ FarnebackPolyExp: 32.4798 ms
+ FarnebackUpdateMatrices: 13.1897 ms
+ FarnebackFlowBlur: 34.386 ms
+Overall Time to calculate: 91.2683 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.4175 ms
+ FarnebackUpdateMatrices: 13.0342 ms
+ FarnebackFlowBlur: 30.9737 ms
+Overall Time to calculate: 88.1013 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.4365 ms
+ FarnebackUpdateMatrices: 13.2238 ms
+ FarnebackFlowBlur: 32.2513 ms
+Overall Time to calculate: 90.9885 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.4438 ms
+ FarnebackUpdateMatrices: 13.0722 ms
+ FarnebackFlowBlur: 31.4279 ms
+Overall Time to calculate: 89.0017 ms
+---- Timing: ----
+ FarnebackPolyExp: 36.4549 ms
+ FarnebackUpdateMatrices: 14.0934 ms
+ FarnebackFlowBlur: 35.3085 ms
+Overall Time to calculate: 98.9715 ms
+---- Timing: ----
+ FarnebackPolyExp: 43.2357 ms
+ FarnebackUpdateMatrices: 14.0254 ms
+ FarnebackFlowBlur: 34.561 ms
+Overall Time to calculate: 105.411 ms
+---- Timing: ----
+ FarnebackPolyExp: 36.5131 ms
+ FarnebackUpdateMatrices: 13.8406 ms
+ FarnebackFlowBlur: 32.4859 ms
+Overall Time to calculate: 97.3727 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.7526 ms
+ FarnebackUpdateMatrices: 13.1679 ms
+ FarnebackFlowBlur: 32.9416 ms
+Overall Time to calculate: 92.5051 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.5838 ms
+ FarnebackUpdateMatrices: 13.0136 ms
+ FarnebackFlowBlur: 32.49 ms
+Overall Time to calculate: 91.0815 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.7441 ms
+ FarnebackUpdateMatrices: 13.2298 ms
+ FarnebackFlowBlur: 33.7267 ms
+Overall Time to calculate: 92.1314 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.8128 ms
+ FarnebackUpdateMatrices: 13.3074 ms
+ FarnebackFlowBlur: 32.7745 ms
+Overall Time to calculate: 93.3302 ms
+---- Timing: ----
+ FarnebackPolyExp: 43.0949 ms
+ FarnebackUpdateMatrices: 17.9274 ms
+ FarnebackFlowBlur: 40.4921 ms
+Overall Time to calculate: 114.542 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.7416 ms
+ FarnebackUpdateMatrices: 13.2369 ms
+ FarnebackFlowBlur: 31.3641 ms
+Overall Time to calculate: 90.1377 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.703 ms
+ FarnebackUpdateMatrices: 13.2195 ms
+ FarnebackFlowBlur: 32.9544 ms
+Overall Time to calculate: 92.4891 ms
+---- Timing: ----
+ FarnebackPolyExp: 47.0411 ms
+ FarnebackUpdateMatrices: 14.3781 ms
+ FarnebackFlowBlur: 35.7918 ms
+Overall Time to calculate: 110.445 ms
+---- Timing: ----
+ FarnebackPolyExp: 37.1424 ms
+ FarnebackUpdateMatrices: 13.8722 ms
+ FarnebackFlowBlur: 33.3903 ms
+Overall Time to calculate: 96.4098 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.9117 ms
+ FarnebackUpdateMatrices: 15.0628 ms
+ FarnebackFlowBlur: 32.0718 ms
+Overall Time to calculate: 96.2356 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.2976 ms
+ FarnebackUpdateMatrices: 13.4332 ms
+ FarnebackFlowBlur: 33.5349 ms
+Overall Time to calculate: 93.0475 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.9107 ms
+ FarnebackUpdateMatrices: 13.0695 ms
+ FarnebackFlowBlur: 31.3008 ms
+Overall Time to calculate: 90.9681 ms
+---- Timing: ----
+ FarnebackPolyExp: 38.671 ms
+ FarnebackUpdateMatrices: 14.0334 ms
+ FarnebackFlowBlur: 34.026 ms
+Overall Time to calculate: 99.2097 ms
+---- Timing: ----
+ FarnebackPolyExp: 55.9532 ms
+ FarnebackUpdateMatrices: 16.0059 ms
+ FarnebackFlowBlur: 38.9948 ms
+Overall Time to calculate: 128.068 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.0938 ms
+ FarnebackUpdateMatrices: 13.6858 ms
+ FarnebackFlowBlur: 32.1751 ms
+Overall Time to calculate: 93.2318 ms
+---- Timing: ----
+ FarnebackPolyExp: 40.6215 ms
+ FarnebackUpdateMatrices: 14.7828 ms
+ FarnebackFlowBlur: 41.6227 ms
+Overall Time to calculate: 113.349 ms
+---- Timing: ----
+ FarnebackPolyExp: 37.0996 ms
+ FarnebackUpdateMatrices: 13.9109 ms
+ FarnebackFlowBlur: 35.6394 ms
+Overall Time to calculate: 104.027 ms
+---- Timing: ----
+ FarnebackPolyExp: 35.153 ms
+ FarnebackUpdateMatrices: 13.6578 ms
+ FarnebackFlowBlur: 32.1724 ms
+Overall Time to calculate: 95.7376 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.3046 ms
+ FarnebackUpdateMatrices: 13.4279 ms
+ FarnebackFlowBlur: 30.9063 ms
+Overall Time to calculate: 89.1435 ms
+---- Timing: ----
+ FarnebackPolyExp: 37.5388 ms
+ FarnebackUpdateMatrices: 14.6494 ms
+ FarnebackFlowBlur: 32.2457 ms
+Overall Time to calculate: 96.7496 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.6067 ms
+ FarnebackUpdateMatrices: 13.8262 ms
+ FarnebackFlowBlur: 32.113 ms
+Overall Time to calculate: 91.318 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.9976 ms
+ FarnebackUpdateMatrices: 13.7005 ms
+ FarnebackFlowBlur: 32.2533 ms
+Overall Time to calculate: 96.3336 ms
+---- Timing: ----
+ FarnebackPolyExp: 37.8349 ms
+ FarnebackUpdateMatrices: 14.8879 ms
+ FarnebackFlowBlur: 37.0566 ms
+Overall Time to calculate: 104.059 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.1314 ms
+ FarnebackUpdateMatrices: 13.2664 ms
+ FarnebackFlowBlur: 30.8673 ms
+Overall Time to calculate: 91.2443 ms
+---- Timing: ----
+ FarnebackPolyExp: 53.0387 ms
+ FarnebackUpdateMatrices: 16.8011 ms
+ FarnebackFlowBlur: 40.7872 ms
+Overall Time to calculate: 121.793 ms
+---- Timing: ----
+ FarnebackPolyExp: 38.0575 ms
+ FarnebackUpdateMatrices: 14.3422 ms
+ FarnebackFlowBlur: 34.5294 ms
+Overall Time to calculate: 100.018 ms
+---- Timing: ----
+ FarnebackPolyExp: 37.0677 ms
+ FarnebackUpdateMatrices: 14.572 ms
+ FarnebackFlowBlur: 34.889 ms
+Overall Time to calculate: 97.2266 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.4821 ms
+ FarnebackUpdateMatrices: 12.9076 ms
+ FarnebackFlowBlur: 30.7899 ms
+Overall Time to calculate: 87.9373 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.5338 ms
+ FarnebackUpdateMatrices: 13.0629 ms
+ FarnebackFlowBlur: 33.2131 ms
+Overall Time to calculate: 92.1886 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.8126 ms
+ FarnebackUpdateMatrices: 13.5643 ms
+ FarnebackFlowBlur: 31.247 ms
+Overall Time to calculate: 88.925 ms
+---- Timing: ----
+ FarnebackPolyExp: 38.3989 ms
+ FarnebackUpdateMatrices: 15.6908 ms
+ FarnebackFlowBlur: 36.2282 ms
+Overall Time to calculate: 101.555 ms
+---- Timing: ----
+ FarnebackPolyExp: 38.5096 ms
+ FarnebackUpdateMatrices: 14.2426 ms
+ FarnebackFlowBlur: 34.4072 ms
+Overall Time to calculate: 101.087 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.7567 ms
+ FarnebackUpdateMatrices: 13.0679 ms
+ FarnebackFlowBlur: 32.0517 ms
+Overall Time to calculate: 90.0849 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.8068 ms
+ FarnebackUpdateMatrices: 13.0853 ms
+ FarnebackFlowBlur: 31.8566 ms
+Overall Time to calculate: 90.1765 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.5978 ms
+ FarnebackUpdateMatrices: 13.1218 ms
+ FarnebackFlowBlur: 31.1491 ms
+Overall Time to calculate: 88.9284 ms
+---- Timing: ----
+ FarnebackPolyExp: 36.0829 ms
+ FarnebackUpdateMatrices: 13.386 ms
+ FarnebackFlowBlur: 32.3719 ms
+Overall Time to calculate: 93.1765 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.5571 ms
+ FarnebackUpdateMatrices: 12.9735 ms
+ FarnebackFlowBlur: 31.1977 ms
+Overall Time to calculate: 89.0863 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.1096 ms
+ FarnebackUpdateMatrices: 13.0334 ms
+ FarnebackFlowBlur: 32.6984 ms
+Overall Time to calculate: 91.6542 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.1676 ms
+ FarnebackUpdateMatrices: 13.1914 ms
+ FarnebackFlowBlur: 31.1804 ms
+Overall Time to calculate: 88.6105 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.1133 ms
+ FarnebackUpdateMatrices: 12.9165 ms
+ FarnebackFlowBlur: 34.2886 ms
+Overall Time to calculate: 93.1921 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.0915 ms
+ FarnebackUpdateMatrices: 13.8282 ms
+ FarnebackFlowBlur: 32.4903 ms
+Overall Time to calculate: 91.8102 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.2949 ms
+ FarnebackUpdateMatrices: 13.3353 ms
+ FarnebackFlowBlur: 32.9495 ms
+Overall Time to calculate: 92.7033 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.0277 ms
+ FarnebackUpdateMatrices: 12.8635 ms
+ FarnebackFlowBlur: 31.2757 ms
+Overall Time to calculate: 88.4284 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.0181 ms
+ FarnebackUpdateMatrices: 13.1747 ms
+ FarnebackFlowBlur: 31.474 ms
+Overall Time to calculate: 89.6945 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.138 ms
+ FarnebackUpdateMatrices: 13.3281 ms
+ FarnebackFlowBlur: 31.5158 ms
+Overall Time to calculate: 89.6459 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.4261 ms
+ FarnebackUpdateMatrices: 12.9218 ms
+ FarnebackFlowBlur: 34.0059 ms
+Overall Time to calculate: 91.9797 ms
+---- Timing: ----
+ FarnebackPolyExp: 32.1437 ms
+ FarnebackUpdateMatrices: 12.7709 ms
+ FarnebackFlowBlur: 32.3917 ms
+Overall Time to calculate: 88.1013 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.0612 ms
+ FarnebackUpdateMatrices: 12.8284 ms
+ FarnebackFlowBlur: 31.9738 ms
+Overall Time to calculate: 88.6416 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.6419 ms
+ FarnebackUpdateMatrices: 12.9425 ms
+ FarnebackFlowBlur: 33.8123 ms
+Overall Time to calculate: 91.6801 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.5881 ms
+ FarnebackUpdateMatrices: 13.0853 ms
+ FarnebackFlowBlur: 30.5029 ms
+Overall Time to calculate: 89.6555 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.3849 ms
+ FarnebackUpdateMatrices: 12.9388 ms
+ FarnebackFlowBlur: 33.126 ms
+Overall Time to calculate: 90.3836 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.0259 ms
+ FarnebackUpdateMatrices: 12.7347 ms
+ FarnebackFlowBlur: 31.0007 ms
+Overall Time to calculate: 88.2826 ms
+---- Timing: ----
+ FarnebackPolyExp: 48.1087 ms
+ FarnebackUpdateMatrices: 14.5673 ms
+ FarnebackFlowBlur: 34.3523 ms
+Overall Time to calculate: 111.359 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.3429 ms
+ FarnebackUpdateMatrices: 12.6735 ms
+ FarnebackFlowBlur: 32.9155 ms
+Overall Time to calculate: 91.5664 ms
+---- Timing: ----
+ FarnebackPolyExp: 38.0754 ms
+ FarnebackUpdateMatrices: 14.4442 ms
+ FarnebackFlowBlur: 32.3914 ms
+Overall Time to calculate: 96.4981 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.4867 ms
+ FarnebackUpdateMatrices: 12.7922 ms
+ FarnebackFlowBlur: 31.8499 ms
+Overall Time to calculate: 88.5705 ms
+---- Timing: ----
+ FarnebackPolyExp: 37.5866 ms
+ FarnebackUpdateMatrices: 14.4867 ms
+ FarnebackFlowBlur: 33.2978 ms
+Overall Time to calculate: 98.6225 ms
+---- Timing: ----
+ FarnebackPolyExp: 38.4735 ms
+ FarnebackUpdateMatrices: 14.8075 ms
+ FarnebackFlowBlur: 33.5749 ms
+Overall Time to calculate: 98.3231 ms
+---- Timing: ----
+ FarnebackPolyExp: 52.8961 ms
+ FarnebackUpdateMatrices: 15.0755 ms
+ FarnebackFlowBlur: 33.0889 ms
+Overall Time to calculate: 113.064 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.7712 ms
+ FarnebackUpdateMatrices: 13.5934 ms
+ FarnebackFlowBlur: 32.1604 ms
+Overall Time to calculate: 91.4265 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.0331 ms
+ FarnebackUpdateMatrices: 14.078 ms
+ FarnebackFlowBlur: 32.5594 ms
+Overall Time to calculate: 89.9103 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.5091 ms
+ FarnebackUpdateMatrices: 13.0516 ms
+ FarnebackFlowBlur: 30.8296 ms
+Overall Time to calculate: 90.0701 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.732 ms
+ FarnebackUpdateMatrices: 13.0134 ms
+ FarnebackFlowBlur: 33.5895 ms
+Overall Time to calculate: 92.3481 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.4841 ms
+ FarnebackUpdateMatrices: 13.1653 ms
+ FarnebackFlowBlur: 30.9128 ms
+Overall Time to calculate: 88.4962 ms
+---- Timing: ----
+ FarnebackPolyExp: 38.1302 ms
+ FarnebackUpdateMatrices: 13.9662 ms
+ FarnebackFlowBlur: 34.4136 ms
+Overall Time to calculate: 97.996 ms
+---- Timing: ----
+ FarnebackPolyExp: 38.1058 ms
+ FarnebackUpdateMatrices: 14.0787 ms
+ FarnebackFlowBlur: 33.9904 ms
+Overall Time to calculate: 100.977 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.6912 ms
+ FarnebackUpdateMatrices: 13.0617 ms
+ FarnebackFlowBlur: 32.9891 ms
+Overall Time to calculate: 92.6929 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.2203 ms
+ FarnebackUpdateMatrices: 13.2791 ms
+ FarnebackFlowBlur: 31.5507 ms
+Overall Time to calculate: 89.0244 ms
+---- Timing: ----
+ FarnebackPolyExp: 37.4866 ms
+ FarnebackUpdateMatrices: 13.8867 ms
+ FarnebackFlowBlur: 36.4067 ms
+Overall Time to calculate: 101.531 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.9458 ms
+ FarnebackUpdateMatrices: 13.1262 ms
+ FarnebackFlowBlur: 32.294 ms
+Overall Time to calculate: 93.3872 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.5379 ms
+ FarnebackUpdateMatrices: 12.85 ms
+ FarnebackFlowBlur: 32.387 ms
+Overall Time to calculate: 89.0991 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.444 ms
+ FarnebackUpdateMatrices: 13.0279 ms
+ FarnebackFlowBlur: 31.5155 ms
+Overall Time to calculate: 92.7571 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.8822 ms
+ FarnebackUpdateMatrices: 12.8047 ms
+ FarnebackFlowBlur: 33.1844 ms
+Overall Time to calculate: 91.2583 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.6124 ms
+ FarnebackUpdateMatrices: 12.7962 ms
+ FarnebackFlowBlur: 31.1343 ms
+Overall Time to calculate: 88.0219 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.8372 ms
+ FarnebackUpdateMatrices: 12.987 ms
+ FarnebackFlowBlur: 33.7731 ms
+Overall Time to calculate: 92.6896 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.586 ms
+ FarnebackUpdateMatrices: 12.9733 ms
+ FarnebackFlowBlur: 31.4338 ms
+Overall Time to calculate: 88.1068 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.0722 ms
+ FarnebackUpdateMatrices: 13.2296 ms
+ FarnebackFlowBlur: 33.2085 ms
+Overall Time to calculate: 92.929 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.653 ms
+ FarnebackUpdateMatrices: 12.8314 ms
+ FarnebackFlowBlur: 31.1015 ms
+Overall Time to calculate: 88.2463 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.3525 ms
+ FarnebackUpdateMatrices: 13.1722 ms
+ FarnebackFlowBlur: 33.5581 ms
+Overall Time to calculate: 92.8931 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.3559 ms
+ FarnebackUpdateMatrices: 12.9214 ms
+ FarnebackFlowBlur: 31.1003 ms
+Overall Time to calculate: 88.6362 ms
+---- Timing: ----
+ FarnebackPolyExp: 37.0827 ms
+ FarnebackUpdateMatrices: 13.8392 ms
+ FarnebackFlowBlur: 32.1024 ms
+Overall Time to calculate: 96.0515 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.1121 ms
+ FarnebackUpdateMatrices: 12.8076 ms
+ FarnebackFlowBlur: 32.7741 ms
+Overall Time to calculate: 89.0541 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.6206 ms
+ FarnebackUpdateMatrices: 13.0066 ms
+ FarnebackFlowBlur: 31.182 ms
+Overall Time to calculate: 88.952 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.5328 ms
+ FarnebackUpdateMatrices: 13.1777 ms
+ FarnebackFlowBlur: 32.1506 ms
+Overall Time to calculate: 91.9824 ms
+---- Timing: ----
+ FarnebackPolyExp: 32.9268 ms
+ FarnebackUpdateMatrices: 12.7761 ms
+ FarnebackFlowBlur: 30.3692 ms
+Overall Time to calculate: 87.5747 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.303 ms
+ FarnebackUpdateMatrices: 12.9907 ms
+ FarnebackFlowBlur: 32.9232 ms
+Overall Time to calculate: 90.8615 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.2455 ms
+ FarnebackUpdateMatrices: 13.1677 ms
+ FarnebackFlowBlur: 30.9308 ms
+Overall Time to calculate: 90.5215 ms
+---- Timing: ----
+ FarnebackPolyExp: 35.7927 ms
+ FarnebackUpdateMatrices: 13.6255 ms
+ FarnebackFlowBlur: 33.1313 ms
+Overall Time to calculate: 96.9709 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.1473 ms
+ FarnebackUpdateMatrices: 13.0527 ms
+ FarnebackFlowBlur: 30.6286 ms
+Overall Time to calculate: 88.3226 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.1312 ms
+ FarnebackUpdateMatrices: 12.9392 ms
+ FarnebackFlowBlur: 33.4304 ms
+Overall Time to calculate: 92.1543 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.4743 ms
+ FarnebackUpdateMatrices: 12.8529 ms
+ FarnebackFlowBlur: 30.5801 ms
+Overall Time to calculate: 88.5661 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.0933 ms
+ FarnebackUpdateMatrices: 12.8055 ms
+ FarnebackFlowBlur: 36.443 ms
+Overall Time to calculate: 96.5868 ms
+---- Timing: ----
+ FarnebackPolyExp: 35.4319 ms
+ FarnebackUpdateMatrices: 12.8706 ms
+ FarnebackFlowBlur: 32.2573 ms
+Overall Time to calculate: 91.8963 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.6281 ms
+ FarnebackUpdateMatrices: 12.8176 ms
+ FarnebackFlowBlur: 31.7485 ms
+Overall Time to calculate: 89.4378 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.6321 ms
+ FarnebackUpdateMatrices: 14.4783 ms
+ FarnebackFlowBlur: 32.8789 ms
+Overall Time to calculate: 94.282 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.5438 ms
+ FarnebackUpdateMatrices: 12.9468 ms
+ FarnebackFlowBlur: 31.0151 ms
+Overall Time to calculate: 88.844 ms
+---- Timing: ----
+ FarnebackPolyExp: 35.0121 ms
+ FarnebackUpdateMatrices: 12.8886 ms
+ FarnebackFlowBlur: 32.9668 ms
+Overall Time to calculate: 91.7061 ms
+---- Timing: ----
+ FarnebackPolyExp: 48.676 ms
+ FarnebackUpdateMatrices: 13.1917 ms
+ FarnebackFlowBlur: 31.3242 ms
+Overall Time to calculate: 104.053 ms
+---- Timing: ----
+ FarnebackPolyExp: 35.0981 ms
+ FarnebackUpdateMatrices: 13.4303 ms
+ FarnebackFlowBlur: 32.8954 ms
+Overall Time to calculate: 92.9173 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.761 ms
+ FarnebackUpdateMatrices: 13.0124 ms
+ FarnebackFlowBlur: 31.4817 ms
+Overall Time to calculate: 90.118 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.3888 ms
+ FarnebackUpdateMatrices: 13.3672 ms
+ FarnebackFlowBlur: 31.481 ms
+Overall Time to calculate: 92.3803 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.2569 ms
+ FarnebackUpdateMatrices: 13.3593 ms
+ FarnebackFlowBlur: 32.4968 ms
+Overall Time to calculate: 90.9347 ms
+---- Timing: ----
+ FarnebackPolyExp: 54.2777 ms
+ FarnebackUpdateMatrices: 16.2782 ms
+ FarnebackFlowBlur: 40.1086 ms
+Overall Time to calculate: 123.265 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.4456 ms
+ FarnebackUpdateMatrices: 13.3686 ms
+ FarnebackFlowBlur: 32.4193 ms
+Overall Time to calculate: 91.6646 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.3436 ms
+ FarnebackUpdateMatrices: 12.7651 ms
+ FarnebackFlowBlur: 33.1081 ms
+Overall Time to calculate: 89.7775 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.1043 ms
+ FarnebackUpdateMatrices: 13.0058 ms
+ FarnebackFlowBlur: 31.7063 ms
+Overall Time to calculate: 89.9717 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.2601 ms
+ FarnebackUpdateMatrices: 14.0116 ms
+ FarnebackFlowBlur: 32.119 ms
+Overall Time to calculate: 91.6351 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.9796 ms
+ FarnebackUpdateMatrices: 12.8158 ms
+ FarnebackFlowBlur: 30.5697 ms
+Overall Time to calculate: 88.5185 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.8055 ms
+ FarnebackUpdateMatrices: 12.8151 ms
+ FarnebackFlowBlur: 32.8283 ms
+Overall Time to calculate: 90.3675 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.1813 ms
+ FarnebackUpdateMatrices: 13.4569 ms
+ FarnebackFlowBlur: 31.2811 ms
+Overall Time to calculate: 89.8762 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.6039 ms
+ FarnebackUpdateMatrices: 12.8878 ms
+ FarnebackFlowBlur: 32.742 ms
+Overall Time to calculate: 91.2441 ms
+---- Timing: ----
+ FarnebackPolyExp: 35.8784 ms
+ FarnebackUpdateMatrices: 13.168 ms
+ FarnebackFlowBlur: 31.5407 ms
+Overall Time to calculate: 93.5436 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.9827 ms
+ FarnebackUpdateMatrices: 13.9024 ms
+ FarnebackFlowBlur: 32.9042 ms
+Overall Time to calculate: 94.0297 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.4675 ms
+ FarnebackUpdateMatrices: 13.1867 ms
+ FarnebackFlowBlur: 31.7468 ms
+Overall Time to calculate: 90.6852 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.3342 ms
+ FarnebackUpdateMatrices: 13.6269 ms
+ FarnebackFlowBlur: 31.9794 ms
+Overall Time to calculate: 90.2891 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.7621 ms
+ FarnebackUpdateMatrices: 13.0362 ms
+ FarnebackFlowBlur: 33.2163 ms
+Overall Time to calculate: 90.2568 ms
+---- Timing: ----
+ FarnebackPolyExp: 40.9593 ms
+ FarnebackUpdateMatrices: 13.2606 ms
+ FarnebackFlowBlur: 30.5696 ms
+Overall Time to calculate: 96.4411 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.5808 ms
+ FarnebackUpdateMatrices: 12.9243 ms
+ FarnebackFlowBlur: 33.8843 ms
+Overall Time to calculate: 92.6139 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.0543 ms
+ FarnebackUpdateMatrices: 13.0099 ms
+ FarnebackFlowBlur: 30.7415 ms
+Overall Time to calculate: 89.183 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.3933 ms
+ FarnebackUpdateMatrices: 12.987 ms
+ FarnebackFlowBlur: 33.2639 ms
+Overall Time to calculate: 92.5452 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.6395 ms
+ FarnebackUpdateMatrices: 13.038 ms
+ FarnebackFlowBlur: 32.5688 ms
+Overall Time to calculate: 90.527 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.4204 ms
+ FarnebackUpdateMatrices: 12.656 ms
+ FarnebackFlowBlur: 31.5762 ms
+Overall Time to calculate: 89.9281 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.2627 ms
+ FarnebackUpdateMatrices: 13.0437 ms
+ FarnebackFlowBlur: 33.7068 ms
+Overall Time to calculate: 90.3502 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.1644 ms
+ FarnebackUpdateMatrices: 12.7743 ms
+ FarnebackFlowBlur: 30.2953 ms
+Overall Time to calculate: 87.1118 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.454 ms
+ FarnebackUpdateMatrices: 13.5979 ms
+ FarnebackFlowBlur: 33.3463 ms
+Overall Time to calculate: 92.0427 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.3627 ms
+ FarnebackUpdateMatrices: 13.0062 ms
+ FarnebackFlowBlur: 31.0561 ms
+Overall Time to calculate: 90.1365 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.0594 ms
+ FarnebackUpdateMatrices: 13.2807 ms
+ FarnebackFlowBlur: 32.7144 ms
+Overall Time to calculate: 90.7461 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.3519 ms
+ FarnebackUpdateMatrices: 12.885 ms
+ FarnebackFlowBlur: 31.5361 ms
+Overall Time to calculate: 88.7893 ms
+---- Timing: ----
+ FarnebackPolyExp: 51.1982 ms
+ FarnebackUpdateMatrices: 16.2035 ms
+ FarnebackFlowBlur: 32.8761 ms
+Overall Time to calculate: 112.017 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.8033 ms
+ FarnebackUpdateMatrices: 13.7079 ms
+ FarnebackFlowBlur: 33.1494 ms
+Overall Time to calculate: 91.8911 ms
+---- Timing: ----
+ FarnebackPolyExp: 36.5414 ms
+ FarnebackUpdateMatrices: 14.633 ms
+ FarnebackFlowBlur: 34.9875 ms
+Overall Time to calculate: 97.8675 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.8972 ms
+ FarnebackUpdateMatrices: 12.9741 ms
+ FarnebackFlowBlur: 31.7892 ms
+Overall Time to calculate: 90.4123 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.6244 ms
+ FarnebackUpdateMatrices: 12.7371 ms
+ FarnebackFlowBlur: 31.0634 ms
+Overall Time to calculate: 88.392 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.3357 ms
+ FarnebackUpdateMatrices: 13.5403 ms
+ FarnebackFlowBlur: 31.7282 ms
+Overall Time to calculate: 89.982 ms
+---- Timing: ----
+ FarnebackPolyExp: 35.6404 ms
+ FarnebackUpdateMatrices: 13.8142 ms
+ FarnebackFlowBlur: 32.4594 ms
+Overall Time to calculate: 93.6692 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.9011 ms
+ FarnebackUpdateMatrices: 12.7607 ms
+ FarnebackFlowBlur: 34.9845 ms
+Overall Time to calculate: 93.5636 ms
+---- Timing: ----
+ FarnebackPolyExp: 35.6892 ms
+ FarnebackUpdateMatrices: 13.0728 ms
+ FarnebackFlowBlur: 31.6191 ms
+Overall Time to calculate: 92.1249 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.6241 ms
+ FarnebackUpdateMatrices: 14.3941 ms
+ FarnebackFlowBlur: 33.6695 ms
+Overall Time to calculate: 95.2513 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.1305 ms
+ FarnebackUpdateMatrices: 14.1178 ms
+ FarnebackFlowBlur: 33.1151 ms
+Overall Time to calculate: 92.3037 ms
+---- Timing: ----
+ FarnebackPolyExp: 48.2809 ms
+ FarnebackUpdateMatrices: 16.728 ms
+ FarnebackFlowBlur: 42.8339 ms
+Overall Time to calculate: 121.953 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.7194 ms
+ FarnebackUpdateMatrices: 13.1783 ms
+ FarnebackFlowBlur: 32.1845 ms
+Overall Time to calculate: 93.5915 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.7682 ms
+ FarnebackUpdateMatrices: 13.243 ms
+ FarnebackFlowBlur: 33.1708 ms
+Overall Time to calculate: 90.8809 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.7258 ms
+ FarnebackUpdateMatrices: 12.9378 ms
+ FarnebackFlowBlur: 31.0805 ms
+Overall Time to calculate: 88.486 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.282 ms
+ FarnebackUpdateMatrices: 13.0852 ms
+ FarnebackFlowBlur: 33.4538 ms
+Overall Time to calculate: 91.8004 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.4068 ms
+ FarnebackUpdateMatrices: 13.2736 ms
+ FarnebackFlowBlur: 31.323 ms
+Overall Time to calculate: 89.0037 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.5045 ms
+ FarnebackUpdateMatrices: 13.0191 ms
+ FarnebackFlowBlur: 33.4188 ms
+Overall Time to calculate: 91.3244 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.8396 ms
+ FarnebackUpdateMatrices: 13.0031 ms
+ FarnebackFlowBlur: 31.4293 ms
+Overall Time to calculate: 89.9629 ms
+---- Timing: ----
+ FarnebackPolyExp: 47.5768 ms
+ FarnebackUpdateMatrices: 14.1769 ms
+ FarnebackFlowBlur: 32.1313 ms
+Overall Time to calculate: 106.045 ms
+---- Timing: ----
+ FarnebackPolyExp: 36.5369 ms
+ FarnebackUpdateMatrices: 13.622 ms
+ FarnebackFlowBlur: 33.4564 ms
+Overall Time to calculate: 95.4031 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.3578 ms
+ FarnebackUpdateMatrices: 12.9488 ms
+ FarnebackFlowBlur: 33.0135 ms
+Overall Time to calculate: 90.6561 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.3157 ms
+ FarnebackUpdateMatrices: 12.964 ms
+ FarnebackFlowBlur: 30.608 ms
+Overall Time to calculate: 88.9688 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.7289 ms
+ FarnebackUpdateMatrices: 13.0093 ms
+ FarnebackFlowBlur: 33.2594 ms
+Overall Time to calculate: 92.0518 ms
+---- Timing: ----
+ FarnebackPolyExp: 37.6505 ms
+ FarnebackUpdateMatrices: 13.8133 ms
+ FarnebackFlowBlur: 32.4806 ms
+Overall Time to calculate: 96.7679 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.4852 ms
+ FarnebackUpdateMatrices: 13.2479 ms
+ FarnebackFlowBlur: 32.62 ms
+Overall Time to calculate: 92.2551 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.6082 ms
+ FarnebackUpdateMatrices: 13.4536 ms
+ FarnebackFlowBlur: 31.1122 ms
+Overall Time to calculate: 88.0028 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.1737 ms
+ FarnebackUpdateMatrices: 13.5268 ms
+ FarnebackFlowBlur: 32.9439 ms
+Overall Time to calculate: 92.398 ms
+---- Timing: ----
+ FarnebackPolyExp: 37.3505 ms
+ FarnebackUpdateMatrices: 15.2046 ms
+ FarnebackFlowBlur: 33.9937 ms
+Overall Time to calculate: 98.3967 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.0368 ms
+ FarnebackUpdateMatrices: 12.9604 ms
+ FarnebackFlowBlur: 30.6982 ms
+Overall Time to calculate: 88.9665 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.1773 ms
+ FarnebackUpdateMatrices: 13.6158 ms
+ FarnebackFlowBlur: 33.5455 ms
+Overall Time to calculate: 93.0778 ms
+---- Timing: ----
+ FarnebackPolyExp: 32.9315 ms
+ FarnebackUpdateMatrices: 12.7403 ms
+ FarnebackFlowBlur: 31.6355 ms
+Overall Time to calculate: 87.7533 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.5935 ms
+ FarnebackUpdateMatrices: 13.1218 ms
+ FarnebackFlowBlur: 31.4664 ms
+Overall Time to calculate: 89.773 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.9317 ms
+ FarnebackUpdateMatrices: 12.9616 ms
+ FarnebackFlowBlur: 33.0113 ms
+Overall Time to calculate: 90.4693 ms
+---- Timing: ----
+ FarnebackPolyExp: 32.7902 ms
+ FarnebackUpdateMatrices: 12.8808 ms
+ FarnebackFlowBlur: 32.6261 ms
+Overall Time to calculate: 90.1655 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.6179 ms
+ FarnebackUpdateMatrices: 12.9168 ms
+ FarnebackFlowBlur: 32.6023 ms
+Overall Time to calculate: 91.0427 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.7456 ms
+ FarnebackUpdateMatrices: 13.2887 ms
+ FarnebackFlowBlur: 31.4856 ms
+Overall Time to calculate: 89.7074 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.9948 ms
+ FarnebackUpdateMatrices: 13.5224 ms
+ FarnebackFlowBlur: 33.2909 ms
+Overall Time to calculate: 91.7718 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.3247 ms
+ FarnebackUpdateMatrices: 14.2576 ms
+ FarnebackFlowBlur: 33.8666 ms
+Overall Time to calculate: 94.8847 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.2541 ms
+ FarnebackUpdateMatrices: 13.6318 ms
+ FarnebackFlowBlur: 33.1254 ms
+Overall Time to calculate: 90.6613 ms
+---- Timing: ----
+ FarnebackPolyExp: 39.1533 ms
+ FarnebackUpdateMatrices: 14.0455 ms
+ FarnebackFlowBlur: 33.7949 ms
+Overall Time to calculate: 99.0237 ms
+---- Timing: ----
+ FarnebackPolyExp: 43.6223 ms
+ FarnebackUpdateMatrices: 14.3763 ms
+ FarnebackFlowBlur: 36.1095 ms
+Overall Time to calculate: 107.42 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.1314 ms
+ FarnebackUpdateMatrices: 12.8806 ms
+ FarnebackFlowBlur: 32.0229 ms
+Overall Time to calculate: 88.3998 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.567 ms
+ FarnebackUpdateMatrices: 13.0231 ms
+ FarnebackFlowBlur: 30.5776 ms
+Overall Time to calculate: 90.3391 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.1339 ms
+ FarnebackUpdateMatrices: 12.9901 ms
+ FarnebackFlowBlur: 33.8195 ms
+Overall Time to calculate: 91.8495 ms
+---- Timing: ----
+ FarnebackPolyExp: 37.6145 ms
+ FarnebackUpdateMatrices: 13.7487 ms
+ FarnebackFlowBlur: 33.0854 ms
+Overall Time to calculate: 96.0511 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.2853 ms
+ FarnebackUpdateMatrices: 13.2576 ms
+ FarnebackFlowBlur: 34.2408 ms
+Overall Time to calculate: 93.636 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.8432 ms
+ FarnebackUpdateMatrices: 13.6602 ms
+ FarnebackFlowBlur: 33.0005 ms
+Overall Time to calculate: 91.2256 ms
+---- Timing: ----
+ FarnebackPolyExp: 32.7761 ms
+ FarnebackUpdateMatrices: 12.8496 ms
+ FarnebackFlowBlur: 31.4155 ms
+Overall Time to calculate: 88.337 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.8168 ms
+ FarnebackUpdateMatrices: 13.0105 ms
+ FarnebackFlowBlur: 33.6373 ms
+Overall Time to calculate: 93.3277 ms
+---- Timing: ----
+ FarnebackPolyExp: 32.7805 ms
+ FarnebackUpdateMatrices: 12.8281 ms
+ FarnebackFlowBlur: 31.622 ms
+Overall Time to calculate: 88.099 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.0022 ms
+ FarnebackUpdateMatrices: 13.0763 ms
+ FarnebackFlowBlur: 33.745 ms
+Overall Time to calculate: 92.634 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.5239 ms
+ FarnebackUpdateMatrices: 13.5425 ms
+ FarnebackFlowBlur: 30.7582 ms
+Overall Time to calculate: 90.0458 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.4291 ms
+ FarnebackUpdateMatrices: 13.3895 ms
+ FarnebackFlowBlur: 34.0403 ms
+Overall Time to calculate: 92.1352 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.7302 ms
+ FarnebackUpdateMatrices: 13.769 ms
+ FarnebackFlowBlur: 35.1336 ms
+Overall Time to calculate: 93.316 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.3081 ms
+ FarnebackUpdateMatrices: 13.0017 ms
+ FarnebackFlowBlur: 30.6515 ms
+Overall Time to calculate: 88.8263 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.7678 ms
+ FarnebackUpdateMatrices: 13.5509 ms
+ FarnebackFlowBlur: 33.2099 ms
+Overall Time to calculate: 91.444 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.4117 ms
+ FarnebackUpdateMatrices: 12.9385 ms
+ FarnebackFlowBlur: 31.1532 ms
+Overall Time to calculate: 88.2416 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.342 ms
+ FarnebackUpdateMatrices: 12.9497 ms
+ FarnebackFlowBlur: 32.3314 ms
+Overall Time to calculate: 90.8409 ms
+---- Timing: ----
+ FarnebackPolyExp: 32.4959 ms
+ FarnebackUpdateMatrices: 12.6798 ms
+ FarnebackFlowBlur: 31.5854 ms
+Overall Time to calculate: 87.6481 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.726 ms
+ FarnebackUpdateMatrices: 13.3891 ms
+ FarnebackFlowBlur: 32.5272 ms
+Overall Time to calculate: 91.056 ms
+---- Timing: ----
+ FarnebackPolyExp: 32.9141 ms
+ FarnebackUpdateMatrices: 12.9884 ms
+ FarnebackFlowBlur: 35.6751 ms
+Overall Time to calculate: 93.2653 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.1992 ms
+ FarnebackUpdateMatrices: 13.6628 ms
+ FarnebackFlowBlur: 34.1087 ms
+Overall Time to calculate: 93.6335 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.6833 ms
+ FarnebackUpdateMatrices: 13.4696 ms
+ FarnebackFlowBlur: 32.0101 ms
+Overall Time to calculate: 90.8832 ms
+---- Timing: ----
+ FarnebackPolyExp: 37.5523 ms
+ FarnebackUpdateMatrices: 13.9925 ms
+ FarnebackFlowBlur: 33.6104 ms
+Overall Time to calculate: 99.8828 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.2644 ms
+ FarnebackUpdateMatrices: 13.1185 ms
+ FarnebackFlowBlur: 32.9277 ms
+Overall Time to calculate: 91.8107 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.4827 ms
+ FarnebackUpdateMatrices: 13.1575 ms
+ FarnebackFlowBlur: 31.15 ms
+Overall Time to calculate: 88.525 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.1233 ms
+ FarnebackUpdateMatrices: 13.1134 ms
+ FarnebackFlowBlur: 34.2369 ms
+Overall Time to calculate: 93.5869 ms
+---- Timing: ----
+ FarnebackPolyExp: 32.1663 ms
+ FarnebackUpdateMatrices: 12.7902 ms
+ FarnebackFlowBlur: 32.705 ms
+Overall Time to calculate: 89.2288 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.2625 ms
+ FarnebackUpdateMatrices: 14.0711 ms
+ FarnebackFlowBlur: 32.6966 ms
+Overall Time to calculate: 93.288 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.2955 ms
+ FarnebackUpdateMatrices: 12.9567 ms
+ FarnebackFlowBlur: 31.1831 ms
+Overall Time to calculate: 88.4602 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.0197 ms
+ FarnebackUpdateMatrices: 13.0894 ms
+ FarnebackFlowBlur: 32.1395 ms
+Overall Time to calculate: 90.4398 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.257 ms
+ FarnebackUpdateMatrices: 13.5033 ms
+ FarnebackFlowBlur: 33.5542 ms
+Overall Time to calculate: 91.5526 ms
+---- Timing: ----
+ FarnebackPolyExp: 38.5929 ms
+ FarnebackUpdateMatrices: 13.4272 ms
+ FarnebackFlowBlur: 33.884 ms
+Overall Time to calculate: 97.8567 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.8077 ms
+ FarnebackUpdateMatrices: 12.8762 ms
+ FarnebackFlowBlur: 35.0514 ms
+Overall Time to calculate: 94.017 ms
+---- Timing: ----
+ FarnebackPolyExp: 32.0293 ms
+ FarnebackUpdateMatrices: 12.4829 ms
+ FarnebackFlowBlur: 31.3365 ms
+Overall Time to calculate: 87.5504 ms
+---- Timing: ----
+ FarnebackPolyExp: 35.4213 ms
+ FarnebackUpdateMatrices: 13.5136 ms
+ FarnebackFlowBlur: 33.9094 ms
+Overall Time to calculate: 94.5089 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.3632 ms
+ FarnebackUpdateMatrices: 12.5649 ms
+ FarnebackFlowBlur: 31.4092 ms
+Overall Time to calculate: 89.0639 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.0845 ms
+ FarnebackUpdateMatrices: 12.4759 ms
+ FarnebackFlowBlur: 31.3859 ms
+Overall Time to calculate: 88.5012 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.4961 ms
+ FarnebackUpdateMatrices: 13.3499 ms
+ FarnebackFlowBlur: 31.842 ms
+Overall Time to calculate: 91.1006 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.3585 ms
+ FarnebackUpdateMatrices: 12.6307 ms
+ FarnebackFlowBlur: 31.2958 ms
+Overall Time to calculate: 88.895 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.5535 ms
+ FarnebackUpdateMatrices: 12.732 ms
+ FarnebackFlowBlur: 32.2833 ms
+Overall Time to calculate: 88.7587 ms
+---- Timing: ----
+ FarnebackPolyExp: 48.8769 ms
+ FarnebackUpdateMatrices: 14.83 ms
+ FarnebackFlowBlur: 33.7334 ms
+Overall Time to calculate: 111.071 ms
+---- Timing: ----
+ FarnebackPolyExp: 50.2181 ms
+ FarnebackUpdateMatrices: 17.6682 ms
+ FarnebackFlowBlur: 41.8954 ms
+Overall Time to calculate: 123.553 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.1261 ms
+ FarnebackUpdateMatrices: 13.0506 ms
+ FarnebackFlowBlur: 31.5119 ms
+Overall Time to calculate: 88.5286 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.4655 ms
+ FarnebackUpdateMatrices: 13.09 ms
+ FarnebackFlowBlur: 31.4173 ms
+Overall Time to calculate: 88.9409 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.353 ms
+ FarnebackUpdateMatrices: 13.097 ms
+ FarnebackFlowBlur: 32.2117 ms
+Overall Time to calculate: 90.7768 ms
+---- Timing: ----
+ FarnebackPolyExp: 42.2302 ms
+ FarnebackUpdateMatrices: 13.059 ms
+ FarnebackFlowBlur: 30.8381 ms
+Overall Time to calculate: 96.4194 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.8836 ms
+ FarnebackUpdateMatrices: 14.5362 ms
+ FarnebackFlowBlur: 35.995 ms
+Overall Time to calculate: 97.5293 ms
+---- Timing: ----
+ FarnebackPolyExp: 32.8707 ms
+ FarnebackUpdateMatrices: 12.9708 ms
+ FarnebackFlowBlur: 31.9814 ms
+Overall Time to calculate: 87.838 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.3347 ms
+ FarnebackUpdateMatrices: 13.1217 ms
+ FarnebackFlowBlur: 30.8892 ms
+Overall Time to calculate: 87.8788 ms
+---- Timing: ----
+ FarnebackPolyExp: 37.4828 ms
+ FarnebackUpdateMatrices: 14.0146 ms
+ FarnebackFlowBlur: 34.2817 ms
+Overall Time to calculate: 98.6267 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.1534 ms
+ FarnebackUpdateMatrices: 13.1451 ms
+ FarnebackFlowBlur: 30.7831 ms
+Overall Time to calculate: 87.6189 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.4839 ms
+ FarnebackUpdateMatrices: 12.9111 ms
+ FarnebackFlowBlur: 33.6155 ms
+Overall Time to calculate: 91.4678 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.5152 ms
+ FarnebackUpdateMatrices: 12.9424 ms
+ FarnebackFlowBlur: 30.7421 ms
+Overall Time to calculate: 87.4884 ms
+---- Timing: ----
+ FarnebackPolyExp: 37.469 ms
+ FarnebackUpdateMatrices: 14.9173 ms
+ FarnebackFlowBlur: 34.9987 ms
+Overall Time to calculate: 98.7811 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.2015 ms
+ FarnebackUpdateMatrices: 12.9835 ms
+ FarnebackFlowBlur: 30.6583 ms
+Overall Time to calculate: 88.6628 ms
+---- Timing: ----
+ FarnebackPolyExp: 43.9587 ms
+ FarnebackUpdateMatrices: 13.8252 ms
+ FarnebackFlowBlur: 35.8575 ms
+Overall Time to calculate: 106.969 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.4982 ms
+ FarnebackUpdateMatrices: 13.1545 ms
+ FarnebackFlowBlur: 33.51 ms
+Overall Time to calculate: 90.969 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.8568 ms
+ FarnebackUpdateMatrices: 13.0263 ms
+ FarnebackFlowBlur: 31.164 ms
+Overall Time to calculate: 88.3528 ms
+---- Timing: ----
+ FarnebackPolyExp: 35.1735 ms
+ FarnebackUpdateMatrices: 13.2002 ms
+ FarnebackFlowBlur: 32.1409 ms
+Overall Time to calculate: 90.9631 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.9825 ms
+ FarnebackUpdateMatrices: 13.1131 ms
+ FarnebackFlowBlur: 30.9471 ms
+Overall Time to calculate: 89.2536 ms
+---- Timing: ----
+ FarnebackPolyExp: 35.1144 ms
+ FarnebackUpdateMatrices: 13.5511 ms
+ FarnebackFlowBlur: 32.7778 ms
+Overall Time to calculate: 92.3458 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.7085 ms
+ FarnebackUpdateMatrices: 13.0599 ms
+ FarnebackFlowBlur: 30.954 ms
+Overall Time to calculate: 87.9216 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.5984 ms
+ FarnebackUpdateMatrices: 13.405 ms
+ FarnebackFlowBlur: 33.2597 ms
+Overall Time to calculate: 91.7929 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.2166 ms
+ FarnebackUpdateMatrices: 13.1016 ms
+ FarnebackFlowBlur: 30.2596 ms
+Overall Time to calculate: 86.1364 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.7871 ms
+ FarnebackUpdateMatrices: 13.3429 ms
+ FarnebackFlowBlur: 33.221 ms
+Overall Time to calculate: 90.9312 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.572 ms
+ FarnebackUpdateMatrices: 13.1842 ms
+ FarnebackFlowBlur: 31.0177 ms
+Overall Time to calculate: 88.1595 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.3278 ms
+ FarnebackUpdateMatrices: 13.0012 ms
+ FarnebackFlowBlur: 31.6367 ms
+Overall Time to calculate: 90.382 ms
+---- Timing: ----
+ FarnebackPolyExp: 52.0596 ms
+ FarnebackUpdateMatrices: 15.6737 ms
+ FarnebackFlowBlur: 35.4009 ms
+Overall Time to calculate: 117.066 ms
+---- Timing: ----
+ FarnebackPolyExp: 35.7076 ms
+ FarnebackUpdateMatrices: 13.1372 ms
+ FarnebackFlowBlur: 33.4586 ms
+Overall Time to calculate: 93.3119 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.8765 ms
+ FarnebackUpdateMatrices: 13.9252 ms
+ FarnebackFlowBlur: 31.9865 ms
+Overall Time to calculate: 90.5457 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.778 ms
+ FarnebackUpdateMatrices: 13.2949 ms
+ FarnebackFlowBlur: 31.0348 ms
+Overall Time to calculate: 89.1186 ms
+---- Timing: ----
+ FarnebackPolyExp: 35.7886 ms
+ FarnebackUpdateMatrices: 12.961 ms
+ FarnebackFlowBlur: 33.3981 ms
+Overall Time to calculate: 92.354 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.7687 ms
+ FarnebackUpdateMatrices: 13.1932 ms
+ FarnebackFlowBlur: 31.0641 ms
+Overall Time to calculate: 88.8284 ms
+---- Timing: ----
+ FarnebackPolyExp: 36.5323 ms
+ FarnebackUpdateMatrices: 13.0382 ms
+ FarnebackFlowBlur: 34.4755 ms
+Overall Time to calculate: 95.4845 ms
+---- Timing: ----
+ FarnebackPolyExp: 32.6069 ms
+ FarnebackUpdateMatrices: 12.5639 ms
+ FarnebackFlowBlur: 30.6975 ms
+Overall Time to calculate: 87.9407 ms
+---- Timing: ----
+ FarnebackPolyExp: 39.7391 ms
+ FarnebackUpdateMatrices: 14.7837 ms
+ FarnebackFlowBlur: 34.0856 ms
+Overall Time to calculate: 101.363 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.9562 ms
+ FarnebackUpdateMatrices: 13.1419 ms
+ FarnebackFlowBlur: 31.5023 ms
+Overall Time to calculate: 88.5338 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.0739 ms
+ FarnebackUpdateMatrices: 12.8715 ms
+ FarnebackFlowBlur: 31.2528 ms
+Overall Time to calculate: 89.4034 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.7058 ms
+ FarnebackUpdateMatrices: 12.9288 ms
+ FarnebackFlowBlur: 32.0802 ms
+Overall Time to calculate: 90.0467 ms
+---- Timing: ----
+ FarnebackPolyExp: 37.609 ms
+ FarnebackUpdateMatrices: 13.6436 ms
+ FarnebackFlowBlur: 33.0636 ms
+Overall Time to calculate: 94.7033 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.9537 ms
+ FarnebackUpdateMatrices: 13.45 ms
+ FarnebackFlowBlur: 33.5857 ms
+Overall Time to calculate: 93.5784 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.0254 ms
+ FarnebackUpdateMatrices: 12.8243 ms
+ FarnebackFlowBlur: 30.8606 ms
+Overall Time to calculate: 86.9992 ms
+---- Timing: ----
+ FarnebackPolyExp: 45.8828 ms
+ FarnebackUpdateMatrices: 13.4875 ms
+ FarnebackFlowBlur: 35.0927 ms
+Overall Time to calculate: 105.532 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.1956 ms
+ FarnebackUpdateMatrices: 12.8394 ms
+ FarnebackFlowBlur: 31.6168 ms
+Overall Time to calculate: 87.8307 ms
+---- Timing: ----
+ FarnebackPolyExp: 32.8508 ms
+ FarnebackUpdateMatrices: 12.6635 ms
+ FarnebackFlowBlur: 30.6791 ms
+Overall Time to calculate: 85.9288 ms
+---- Timing: ----
+ FarnebackPolyExp: 44.5062 ms
+ FarnebackUpdateMatrices: 14.0664 ms
+ FarnebackFlowBlur: 35.4243 ms
+Overall Time to calculate: 105.337 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.6847 ms
+ FarnebackUpdateMatrices: 13.0707 ms
+ FarnebackFlowBlur: 31.2827 ms
+Overall Time to calculate: 88.4646 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.7475 ms
+ FarnebackUpdateMatrices: 12.9776 ms
+ FarnebackFlowBlur: 33.8171 ms
+Overall Time to calculate: 92.3526 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.3488 ms
+ FarnebackUpdateMatrices: 12.8049 ms
+ FarnebackFlowBlur: 30.9207 ms
+Overall Time to calculate: 86.88 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.8604 ms
+ FarnebackUpdateMatrices: 13.7496 ms
+ FarnebackFlowBlur: 32.8145 ms
+Overall Time to calculate: 91.3184 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.3876 ms
+ FarnebackUpdateMatrices: 12.8941 ms
+ FarnebackFlowBlur: 31.2313 ms
+Overall Time to calculate: 87.6816 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.9413 ms
+ FarnebackUpdateMatrices: 13.1635 ms
+ FarnebackFlowBlur: 31.5174 ms
+Overall Time to calculate: 89.1571 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.811 ms
+ FarnebackUpdateMatrices: 13.1132 ms
+ FarnebackFlowBlur: 32.7754 ms
+Overall Time to calculate: 90.7642 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.689 ms
+ FarnebackUpdateMatrices: 13.034 ms
+ FarnebackFlowBlur: 30.9613 ms
+Overall Time to calculate: 87.9086 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.0198 ms
+ FarnebackUpdateMatrices: 13.2445 ms
+ FarnebackFlowBlur: 34.6567 ms
+Overall Time to calculate: 93.1089 ms
+---- Timing: ----
+ FarnebackPolyExp: 33.6683 ms
+ FarnebackUpdateMatrices: 12.9148 ms
+ FarnebackFlowBlur: 30.7572 ms
+Overall Time to calculate: 87.054 ms
+---- Timing: ----
+ FarnebackPolyExp: 34.1845 ms
+ FarnebackUpdateMatrices: 13.1404 ms
+ FarnebackFlowBlur: 32.9666 ms
+Overall Time to calculate: 90.7896 ms
+---- Timing: ----
+ FarnebackPolyExp: 35.4031 ms
+ FarnebackUpdateMatrices: 13.5064 ms
+ FarnebackFlowBlur: 31.6584 ms
+Overall Time to calculate: 91.3388 ms

@@ -137,27 +137,30 @@ static void FarnebackPolyExpPPstl2(const std::vector<float>& src, std::vector<fl
 
 int main() {
     srand(43156844);
+    /*
     std::ofstream myFile;
     myFile.open ("example.txt");
     myFile << "Timings\n";
     myFile.close();
+    */
     std::cout << "calculating polynomial coefficients for " << sampleSize << " Frames..." << std::endl;
     for (int z = 0; z < sampleSize ; ++z) {
+        //create src vector with random sample data
         std::vector<float> src (testHeight * testWidth);
         for(float & i : src){
             i = float(rand() % 255 + 30);
         }
         std::vector<float> dst ((testHeight*testWidth)*5);
-        auto start = std::chrono::steady_clock::now();
+        //auto start = std::chrono::steady_clock::now();
         FarnebackPolyExpPPstl2(src, dst);
-        auto end = std::chrono::steady_clock::now();
-        auto duration = std::chrono::duration_cast<std::chrono::duration<double,std::milli>>(end - start).count();
-
+        //auto end = std::chrono::steady_clock::now();
+        //auto duration = std::chrono::duration_cast<std::chrono::duration<double,std::milli>>(end - start).count();
+        /*
         myFile.open ("example.txt",  std::ios_base::app);
         myFile << duration <<"\n";
         myFile.close();
+        */
     }
-
     return 0;
 }
 
