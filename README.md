@@ -1,4 +1,4 @@
-# Bachelor thesis: Modernes parallels C++ für Hardwarebeschleuniger
+# Bachelor thesis: Modernes paralleles C++ für Hardwarebeschleuniger
   Complete thesis can be found in /docs.
   
   Sample video and Sample code sourced from: 
